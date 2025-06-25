@@ -51,3 +51,8 @@ http-server
 - [demo-7](http://127.0.0.1:8080/src/index7)
 - [demo-9](http://127.0.0.1:8080/src/index9)
 - [demo-999](http://127.0.0.1:8080/src/index999) 在官网使用 DeepSeek R1 生成；
+
+
+## 其他
+
+参考 [v0.dev](https://v0.dev/chat/projects) 的生成结果：可以生成项目而非仅仅一个 html 页面；
