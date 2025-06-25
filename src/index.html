@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>张三 - 全栈开发工程师</title>
+    <style>
+      :root {
+        --primary: #2563eb;
+        --secondary: #1e40af;
+        --dark: #1e293b;
+        --light: #f8fafc;
+        --gray: #94a3b8;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Segoe UI", system-ui, sans-serif;
+      }
+
+      body {
+        background-color: var(--light);
+        color: var(--dark);
+        line-height: 1.6;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+      }
+
+      /* 导航栏 */
+      header {
+        background-color: white;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        position: sticky;
+        top: 0;
+        z-index: 100;
+      }
+
+      nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px 0;
+      }
+
+      .logo {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--primary);
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 30px;
+      }
+
+      .nav-links a {
+        text-decoration: none;
+        color: var(--dark);
+        font-weight: 500;
+        transition: color 0.3s;
+      }
+
+      .nav-links a:hover {
+        color: var(--primary);
+      }
+
+      /* 个人信息区 */
+      .hero {
+        padding: 80px 0;
+        text-align: center;
+      }
+
+      .hero-content {
+        max-width: 800px;
+        margin: 0 auto;
+      }
+
+      .avatar {
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        object-fit: cover;
+        margin-bottom: 20px;
+        border: 5px solid var(--primary);
+      }
+
+      h1 {
+        font-size: 2.5rem;
+        margin-bottom: 10px;
+      }
+
+      .title {
+        color: var(--primary);
+        font-size: 1.2rem;
+        margin-bottom: 20px;
+      }
+
+      .description {
+        color: var(--gray);
+        margin-bottom: 30px;
+      }
+
+      .social-links {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+      }
+
+      .social-links a {
+        color: var(--dark);
+        font-size: 1.5rem;
+        transition: color 0.3s;
+      }
+
+      .social-links a:hover {
+        color: var(--primary);
+      }
+
+      /* 技能区 */
+      .section {
+        padding: 60px 0;
+      }
+
+      .section-title {
+        text-align: center;
+        font-size: 2rem;
+        margin-bottom: 40px;
+        position: relative;
+      }
+
+      .section-title::after {
+        content: "";
+        position: absolute;
+        bottom: -10px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 80px;
+        height: 4px;
+        background-color: var(--primary);
+      }
+
+      .skills-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 30px;
+      }
+
+      .skill-card {
+        background-color: white;
+        border-radius: 10px;
+        padding: 30px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        transition: transform 0.3s;
+      }
+
+      .skill-card:hover {
+        transform: translateY(-5px);
+      }
+
+      .skill-title {
+        font-size: 1.2rem;
+        margin-bottom: 15px;
+        color: var(--primary);
+      }
+
+      .skill-items {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+
+      .skill-item {
+        background-color: var(--light);
+        padding: 5px 15px;
+        border-radius: 20px;
+        font-size: 0.9rem;
+      }
+
+      /* 项目区 */
+      .projects-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+        gap: 30px;
+      }
+
+      .project-card {
+        background-color: white;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        transition: transform 0.3s;
+      }
+
+      .project-card:hover {
+        transform: translateY(-5px);
+      }
+
+      .project-image {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+      }
+
+      .project-content {
+        padding: 20px;
+      }
+
+      .project-title {
+        font-size: 1.3rem;
+        margin-bottom: 10px;
+      }
+
+      .project-description {
+        color: var(--gray);
+        margin-bottom: 15px;
+      }
+
+      .project-tech {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-bottom: 15px;
+      }
+
+      .tech-item {
+        background-color: var(--light);
+        padding: 3px 10px;
+        border-radius: 3px;
+        font-size: 0.8rem;
+      }
+
+      .project-links {
+        display: flex;
+        gap: 15px;
+      }
+
+      .project-links a {
+        text-decoration: none;
+        color: var(--primary);
+        font-weight: 500;
+        font-size: 0.9rem;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+      }
+
+      /* 页脚 */
+      footer {
+        background-color: var(--dark);
+        color: white;
+        text-align: center;
+        padding: 30px 0;
+        margin-top: 60px;
+      }
+
+      /* 响应式设计 */
+      @media (max-width: 768px) {
+        .nav-links {
+          display: none;
+        }
+
+        .skills-container,
+        .projects-container {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <nav>
+          <div class="logo">ZhangSan</div>
+          <div class="nav-links">
+            <a href="#about">关于我</a>
+            <a href="#skills">技能</a>
+            <a href="#projects">项目</a>
+            <a href="#contact">联系</a>
+          </div>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section id="about" class="hero">
+        <div class="container">
+          <div class="hero-content">
+            <img
+              src="https://via.placeholder.com/150"
+              alt="张三"
+              class="avatar"
+            />
+            <h1>张三</h1>
+            <p class="title">全栈开发工程师 · 3年经验</p>
+            <p class="description">
+              我是一名热爱技术的全栈开发工程师，专注于构建高效、可扩展的Web应用。
+              擅长React、Node.js和云服务部署，致力于通过代码解决实际问题。
+            </p>
+            <div class="social-links">
+              <a href="#"><i class="fab fa-github"></i></a>
+              <a href="#"><i class="fab fa-linkedin"></i></a>
+              <a href="#"><i class="fab fa-twitter"></i></a>
+              <a href="#"><i class="fas fa-envelope"></i></a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="skills" class="section">
+        <div class="container">
+          <h2 class="section-title">技术栈</h2>
+          <div class="skills-container">
+            <div class="skill-card">
+              <h3 class="skill-title">前端开发</h3>
+              <div class="skill-items">
+                <span class="skill-item">React</span>
+                <span class="skill-item">TypeScript</span>
+                <span class="skill-item">Next.js</span>
+                <span class="skill-item">Redux</span>
+                <span class="skill-item">Tailwind CSS</span>
+                <span class="skill-item">HTML/CSS</span>
+              </div>
+            </div>
+
+            <div class="skill-card">
+              <h3 class="skill-title">后端开发</h3>
+              <div class="skill-items">
+                <span class="skill-item">Node.js</span>
+                <span class="skill-item">Express</span>
+                <span class="skill-item">NestJS</span>
+                <span class="skill-item">Python</span>
+                <span class="skill-item">Django</span>
+                <span class="skill-item">REST API</span>
+              </div>
+            </div>
+
+            <div class="skill-card">
+              <h3 class="skill-title">数据库 & DevOps</h3>
+              <div class="skill-items">
+                <span class="skill-item">MongoDB</span>
+                <span class="skill-item">PostgreSQL</span>
+                <span class="skill-item">MySQL</span>
+                <span class="skill-item">Docker</span>
+                <span class="skill-item">AWS</span>
+                <span class="skill-item">CI/CD</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="projects" class="section bg-gray-100">
+        <div class="container">
+          <h2 class="section-title">精选项目</h2>
+          <div class="projects-container">
+            <div class="project-card">
+              <img
+                src="https://via.placeholder.com/600x400"
+                alt="电商平台"
+                class="project-image"
+              />
+              <div class="project-content">
+                <h3 class="project-title">全栈电商平台</h3>
+                <p class="project-description">
+                  一个完整的电商解决方案，包含用户认证、商品管理、支付集成和订单处理系统。
+                </p>
+                <div class="project-tech">
+                  <span class="tech-item">React</span>
+                  <span class="tech-item">Node.js</span>
+                  <span class="tech-item">MongoDB</span>
+                  <span class="tech-item">Stripe</span>
+                </div>
+                <div class="project-links">
+                  <a href="#"><i class="fas fa-external-link-alt"></i> 演示</a>
+                  <a href="#"><i class="fab fa-github"></i> 代码</a>
+                </div>
+              </div>
+            </div>
+
+            <div class="project-card">
+              <img
+                src="https://via.placeholder.com/600x400"
+                alt="任务管理"
+                class="project-image"
+              />
+              <div class="project-content">
+                <h3 class="project-title">团队协作工具</h3>
+                <p class="project-description">
+                  实时任务管理应用，支持多用户协作、任务分配和进度跟踪，使用WebSocket实现实时更新。
+                </p>
+                <div class="project-tech">
+                  <span class="tech-item">Next.js</span>
+                  <span class="tech-item">TypeScript</span>
+                  <span class="tech-item">Socket.io</span>
+                  <span class="tech-item">PostgreSQL</span>
+                </div>
+                <div class="project-links">
+                  <a href="#"><i class="fas fa-external-link-alt"></i> 演示</a>
+                  <a href="#"><i class="fab fa-github"></i> 代码</a>
+                </div>
+              </div>
+            </div>
+
+            <div class="project-card">
+              <img
+                src="https://via.placeholder.com/600x400"
+                alt="数据分析"
+                class="project-image"
+              />
+              <div class="project-content">
+                <h3 class="project-title">数据可视化仪表盘</h3>
+                <p class="project-description">
+                  为企业客户定制的数据分析平台，支持大数据处理和交互式可视化。
+                </p>
+                <div class="project-tech">
+                  <span class="tech-item">Python</span>
+                  <span class="tech-item">Django</span>
+                  <span class="tech-item">D3.js</span>
+                  <span class="tech-item">Pandas</span>
+                </div>
+                <div class="project-links">
+                  <a href="#"><i class="fas fa-external-link-alt"></i> 演示</a>
+                  <a href="#"><i class="fab fa-github"></i> 代码</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer id="contact">
+      <div class="container">
+        <p>© 2025 张三. 保留所有权利</p>
+        <p>联系方式: zhangsan@example.com | +86 138 8888 8888</p>
+      </div>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>高级前端开发工程师 Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      // Tailwind dark mode config
+      tailwind.config = {
+        darkMode: "class",
+      };
+    </script>
+    <style>
+      /* 技术栈图标大小统一 */
+      .tech-icon {
+        width: 32px;
+        height: 32px;
+      }
+    </style>
+  </head>
+  <body
+    class="bg-gray-100 text-gray-900 dark:bg-gray-900 dark:text-gray-100 min-h-screen flex flex-col transition-colors duration-300"
+  >
+    <!-- 顶部导航 -->
+    <nav class="bg-white dark:bg-gray-800 shadow sticky top-0 z-50">
+      <div
+        class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between"
+      >
+        <h1
+          class="text-2xl font-bold text-indigo-700 dark:text-indigo-400 select-none"
+        >
+          高级前端开发工程师
+        </h1>
+        <ul
+          class="hidden md:flex space-x-8 font-medium text-gray-700 dark:text-gray-300"
+        >
+          <li>
+            <a
+              href="#about"
+              class="hover:text-indigo-600 dark:hover:text-indigo-400 transition"
+              >关于我</a
+            >
+          </li>
+          <li>
+            <a
+              href="#tech"
+              class="hover:text-indigo-600 dark:hover:text-indigo-400 transition"
+              >技术栈</a
+            >
+          </li>
+          <li>
+            <a
+              href="#experience"
+              class="hover:text-indigo-600 dark:hover:text-indigo-400 transition"
+              >工作经历</a
+            >
+          </li>
+          <li>
+            <a
+              href="#projects"
+              class="hover:text-indigo-600 dark:hover:text-indigo-400 transition"
+              >项目经历</a
+            >
+          </li>
+          <li>
+            <a
+              href="#personal-projects"
+              class="hover:text-indigo-600 dark:hover:text-indigo-400 transition"
+              >个人项目</a
+            >
+          </li>
+          <li>
+            <a
+              href="#contact"
+              class="hover:text-indigo-600 dark:hover:text-indigo-400 transition"
+              >联系方式</a
+            >
+          </li>
+        </ul>
+        <div class="flex items-center space-x-4">
+          <button
+            id="theme-toggle"
+            aria-label="切换主题"
+            class="p-2 rounded-md bg-indigo-100 dark:bg-indigo-700 text-indigo-700 dark:text-indigo-100 hover:bg-indigo-200 dark:hover:bg-indigo-600 transition"
+          >
+            <svg
+              id="icon-sun"
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-6 w-6 hidden"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M12 3v1m0 16v1m8.485-9H21m-18 0H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.343l-.707-.707M12 7a5 5 0 100 10 5 5 0 000-10z"
+              />
+            </svg>
+            <svg
+              id="icon-moon"
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M21 12.79A9 9 0 1111.21 3a7 7 0 009.79 9.79z"
+              />
+            </svg>
+          </button>
+          <a
+            href="resume.html"
+            target="_blank"
+            rel="noopener"
+            class="px-4 py-2 rounded-md bg-indigo-600 text-white font-semibold hover:bg-indigo-700 transition select-none"
+            >预览简历</a
+          >
+        </div>
+      </div>
+    </nav>
+
+    <main class="flex-grow max-w-5xl mx-auto px-6 py-10 space-y-16">
+      <!-- 关于我 -->
+      <section
+        id="about"
+        class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-8 flex flex-col md:flex-row items-center md:items-start gap-8"
+      >
+        <img
+          src="https://picsum.photos/seed/avatar/200/200"
+          alt="个人头像"
+          class="w-48 h-48 rounded-full object-cover border-4 border-indigo-600 dark:border-indigo-400"
+        />
+        <div class="flex-1">
+          <h2
+            class="text-3xl font-bold mb-4 text-indigo-700 dark:text-indigo-400"
+          >
+            高级前端开发工程师，6年专业经验
+          </h2>
+          <p
+            class="text-lg text-gray-700 dark:text-gray-300 mb-4 leading-relaxed"
+          >
+            拥有丰富的企业级应用开发经验，精通多种前沿技术栈，擅长构建高性能、高可维护性的
+            SaaS 系统、电商平台、小程序及响应式 H5
+            页面。具备全面的系统架构设计能力，注重代码质量和团队协作，持续推动项目创新与优化，致力于为用户提供卓越的数字化体验。
+          </p>
+        </div>
+      </section>
+
+      <!-- 技术栈 -->
+      <section
+        id="tech"
+        class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-8"
+      >
+        <h2
+          class="text-3xl font-bold mb-6 text-indigo-700 dark:text-indigo-400 border-b border-indigo-200 dark:border-indigo-700 pb-2"
+        >
+          技术栈
+        </h2>
+        <div class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 gap-6">
+          <!-- 技术卡片示例 -->
+          <div
+            class="flex flex-col items-center bg-indigo-50 dark:bg-indigo-900 rounded-lg p-4 shadow hover:shadow-lg transition cursor-default select-none"
+          >
+            <img
+              src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg"
+              alt="React"
+              class="tech-icon mb-2"
+            />
+            <span class="font-semibold text-indigo-700 dark:text-indigo-300"
+              >React</span
+            >
+          </div>
+          <div
+            class="flex flex-col items-center bg-indigo-50 dark:bg-indigo-900 rounded-lg p-4 shadow hover:shadow-lg transition cursor-default select-none"
+          >
+            <img
+              src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg"
+              alt="TypeScript"
+              class="tech-icon mb-2"
+            />
+            <span class="font-semibold text-indigo-700 dark:text-indigo-300"
+              >TypeScript</span
+            >
+          </div>
+          <div
+            class="flex flex-col items-center bg-indigo-50 dark:bg-indigo-900 rounded-lg p-4 shadow hover:shadow-lg transition cursor-default select-none"
+          >
+            <img
+              src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vuejs/vuejs-original.svg"
+              alt="Vue"
+              class="tech-icon mb-2"
+            />
+            <span class="font-semibold text-indigo-700 dark:text-indigo-300"
+              >Vue</span
+            >
+          </div>
+          <div
+            class="flex flex-col items-center bg-indigo-50 dark:bg-indigo-900 rounded-lg p-4 shadow hover:shadow-lg transition cursor-default select-none"
+          >
+            <img
+              src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg"
+              alt="Nextjs"
+              class="tech-icon mb-2"
+            />
+            <span class="font-semibold text-indigo-700 dark:text-indigo-300"
+              >Nextjs</span
+            >
+          </div>
+          <div
+            class="flex flex-col items-center bg-indigo-50 dark:bg-indigo-900 rounded-lg p-4 shadow hover:shadow-lg transition cursor-default select-none"
+          >
+            <img
+              src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nestjs/nestjs-plain.svg"
+              alt="Nestjs"
+              class="tech-icon mb-2"
+            />
+            <span class="font-semibold text-indigo-700 dark:text-indigo-300"
+              >Nestjs</span
+            >
+          </div>
+          <div
+            class="flex flex-col items-center bg-indigo-50 dark:bg-indigo-900 rounded-lg p-4 shadow hover:shadow-lg transition cursor-default select-none"
+          >
+            <img
+              src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg"
+              alt="MySql"
+              class="tech-icon mb-2"
+            />
+            <span class="font-semibold text-indigo-700 dark:text-indigo-300"
+              >MySql</span
+            >
+          </div>
+          <div
+            class="flex flex-col items-center bg-indigo-50 dark:bg-indigo-900 rounded-lg p-4 shadow hover:shadow-lg transition cursor-default select-none"
+          >
+            <img
+              src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/redis/redis-original.svg"
+              alt="Redis"
+              class="tech-icon mb-2"
+            />
+            <span class="font-semibold text-indigo-700 dark:text-indigo-300"
+              >Redis</span
+            >
+          </div>
+          <div
+            class="flex flex-col items-center bg-indigo-50 dark:bg-indigo-900 rounded-lg p-4 shadow hover:shadow-lg transition cursor-default select-none"
+          >
+            <img
+              src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg"
+              alt="Mongodb"
+              class="tech-icon mb-2"
+            />
+            <span class="font-semibold text-indigo-700 dark:text-indigo-300"
+              >Mongodb</span
+            >
+          </div>
+        </div>
+      </section>
+
+      <!-- 工作经历 时间线 -->
+      <section
+        id="experience"
+        class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-8"
+      >
+        <h2
+          class="text-3xl font-bold mb-8 text-indigo-700 dark:text-indigo-400 border-b border-indigo-200 dark:border-indigo-700 pb-2"
+        >
+          工作经历
+        </h2>
+        <div
+          class="relative border-l-4 border-indigo-600 dark:border-indigo-400 ml-4"
+        >
+          <!-- 时间线项 -->
+          <div class="mb-14 ml-6 relative">
+            <span
+              class="absolute -left-6 top-2 bg-indigo-600 dark:bg-indigo-400 w-5 h-5 rounded-full border-2 border-white dark:border-gray-900"
+            ></span>
+            <time
+              class="mb-1 text-sm font-semibold text-indigo-700 dark:text-indigo-300"
+              >2023 - 至今</time
+            >
+            <h3 class="text-2xl font-semibold text-gray-900 dark:text-gray-100">
+              公司D · 高级前端工程师
+            </h3>
+            <p class="text-gray-700 dark:text-gray-300 mt-2 leading-relaxed">
+              主导财务SaaS系统及微信小程序的前端架构升级，结合Vue与Nestjs构建高性能、可扩展的财务管理平台。设计并实现复杂报表交互与实时数据加密传输方案，保障数据安全与用户体验。推动团队采用前沿技术和自动化测试，提升开发效率和代码质量。
+            </p>
+          </div>
+          <div class="mb-14 ml-6 relative">
+            <span
+              class="absolute -left-6 top-2 bg-indigo-600 dark:bg-indigo-400 w-5 h-5 rounded-full border-2 border-white dark:border-gray-900"
+            ></span>
+            <time
+              class="mb-1 text-sm font-semibold text-indigo-700 dark:text-indigo-300"
+              >2020 - 2023</time
+            >
+            <h3 class="text-2xl font-semibold text-gray-900 dark:text-gray-100">
+              公司C · 前端架构师
+            </h3>
+            <p class="text-gray-700 dark:text-gray-300 mt-2 leading-relaxed">
+              负责低代码平台及多款小程序的整体前端架构设计，基于React和Nextjs打造灵活高效的组件体系。实现动态表单渲染和数据缓存优化，显著缩短开发周期。引入持续集成与代码规范，提升团队协作与项目稳定性。
+            </p>
+          </div>
+          <div class="mb-14 ml-6 relative">
+            <span
+              class="absolute -left-6 top-2 bg-indigo-600 dark:bg-indigo-400 w-5 h-5 rounded-full border-2 border-white dark:border-gray-900"
+            ></span>
+            <time
+              class="mb-1 text-sm font-semibold text-indigo-700 dark:text-indigo-300"
+              >2017 - 2020</time
+            >
+            <h3 class="text-2xl font-semibold text-gray-900 dark:text-gray-100">
+              公司B · 中级前端工程师
+            </h3>
+            <p class="text-gray-700 dark:text-gray-300 mt-2 leading-relaxed">
+              参与地产SaaS系统及销售小程序开发，使用Vue和Nestjs实现多端数据同步与跨平台适配。优化销售流程数字化，实现客户管理自动化。推动前端性能优化，提升页面加载速度与交互流畅度。
+            </p>
+          </div>
+          <div class="mb-14 ml-6 relative">
+            <span
+              class="absolute -left-6 top-2 bg-indigo-600 dark:bg-indigo-400 w-5 h-5 rounded-full border-2 border-white dark:border-gray-900"
+            ></span>
+            <time
+              class="mb-1 text-sm font-semibold text-indigo-700 dark:text-indigo-300"
+              >2015 - 2017</time
+            >
+            <h3 class="text-2xl font-semibold text-gray-900 dark:text-gray-100">
+              公司A · 初级前端工程师
+            </h3>
+            <p class="text-gray-700 dark:text-gray-300 mt-2 leading-relaxed">
+              参与供应链SaaS系统前端开发，基于React和TypeScript实现多角色权限管理与实时数据监控功能。协助性能调优，推动代码规范建设，保障系统稳定运行。
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- 项目经历 -->
+      <section
+        id="projects"
+        class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-8"
+      >
+        <h2
+          class="text-3xl font-bold mb-8 text-indigo-700 dark:text-indigo-400 border-b border-indigo-200 dark:border-indigo-700 pb-2"
+        >
+          项目经历
+        </h2>
+
+        <article
+          class="mb-12 rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 bg-indigo-50 dark:bg-indigo-900"
+        >
+          <img
+            src="https://picsum.photos/seed/ecommerce/600/400"
+            alt="SaaS供应链系统"
+            class="w-full object-cover h-52 sm:h-64"
+          />
+          <div class="p-6">
+            <h3
+              class="text-2xl font-semibold mb-2 text-indigo-700 dark:text-indigo-300"
+            >
+              SaaS供应链系统
+            </h3>
+            <p class="mb-3 text-gray-800 dark:text-gray-300">
+              基于React和TypeScript打造的供应链管理系统，支持多角色权限控制和实时数据推送，保障业务连续性和数据安全。
+            </p>
+            <ul class="mb-4 text-gray-700 dark:text-gray-400 space-y-1">
+              <li>
+                <strong>技术栈：</strong>React, TypeScript, Nestjs, MySql, Redis
+              </li>
+              <li>
+                <strong>重难点：</strong
+                >复杂权限体系设计，WebSocket实时数据推送，性能瓶颈排查与优化
+              </li>
+              <li>
+                <strong>效果：</strong
+                >响应速度提升30%，系统稳定性显著增强，用户满意度提升
+              </li>
+            </ul>
+            <div
+              class="flex flex-wrap gap-6 text-indigo-700 dark:text-indigo-400 font-semibold"
+            >
+              <a
+                href="https://github.com/example/ecommerce-saas"
+                target="_blank"
+                class="hover:underline"
+                >代码仓库</a
+              >
+              <a
+                href="https://example.com/ecommerce-saas"
+                target="_blank"
+                class="hover:underline"
+                >项目预览</a
+              >
+            </div>
+          </div>
+        </article>
+
+        <article
+          class="mb-12 rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 bg-indigo-50 dark:bg-indigo-900"
+        >
+          <img
+            src="https://picsum.photos/seed/realestate/600/400"
+            alt="地产SaaS系统与销售小程序"
+            class="w-full object-cover h-52 sm:h-64"
+          />
+          <div class="p-6">
+            <h3
+              class="text-2xl font-semibold mb-2 text-indigo-700 dark:text-indigo-300"
+            >
+              地产SaaS系统 + 销售小程序
+            </h3>
+            <p class="mb-3 text-gray-800 dark:text-gray-300">
+              集成地产管理SaaS平台与微信销售小程序，实现多渠道销售及客户管理数字化，提升业务协同效率。
+            </p>
+            <ul class="mb-4 text-gray-700 dark:text-gray-400 space-y-1">
+              <li><strong>技术栈：</strong>Vue, TypeScript, Nestjs, Mongodb</li>
+              <li>
+                <strong>重难点：</strong
+                >多端数据同步，跨平台UI适配，复杂业务流程抽象
+              </li>
+              <li>
+                <strong>效果：</strong>销售转化率提升20%，客户管理效率提升40%
+              </li>
+            </ul>
+            <div
+              class="flex flex-wrap gap-6 text-indigo-700 dark:text-indigo-400 font-semibold"
+            >
+              <a
+                href="https://github.com/example/realestate-saas"
+                target="_blank"
+                class="hover:underline"
+                >代码仓库</a
+              >
+              <a
+                href="https://example.com/realestate-saas"
+                target="_blank"
+                class="hover:underline"
+                >项目预览</a
+              >
+            </div>
+          </div>
+        </article>
+
+        <article
+          class="mb-12 rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 bg-indigo-50 dark:bg-indigo-900"
+        >
+          <img
+            src="https://picsum.photos/seed/lowcode/600/400"
+            alt="低代码平台和小程序"
+            class="w-full object-cover h-52 sm:h-64"
+          />
+          <div class="p-6">
+            <h3
+              class="text-2xl font-semibold mb-2 text-indigo-700 dark:text-indigo-300"
+            >
+              低代码平台和小程序
+            </h3>
+            <p class="mb-3 text-gray-800 dark:text-gray-300">
+              打造基于React和Nextjs的低代码开发平台，支持动态表单、组件复用及多业务小程序快速生成。
+            </p>
+            <ul class="mb-4 text-gray-700 dark:text-gray-400 space-y-1">
+              <li><strong>技术栈：</strong>React, Nextjs, TypeScript, Redis</li>
+              <li>
+                <strong>重难点：</strong
+                >动态组件渲染，数据缓存优化，复杂状态管理
+              </li>
+              <li>
+                <strong>效果：</strong
+                >开发周期缩短50%，用户定制化需求满足率大幅提升
+              </li>
+            </ul>
+            <div
+              class="flex flex-wrap gap-6 text-indigo-700 dark:text-indigo-400 font-semibold"
+            >
+              <a
+                href="https://github.com/example/lowcode-platform"
+                target="_blank"
+                class="hover:underline"
+                >代码仓库</a
+              >
+              <a
+                href="https://example.com/lowcode-platform"
+                target="_blank"
+                class="hover:underline"
+                >项目预览</a
+              >
+            </div>
+          </div>
+        </article>
+
+        <article
+          class="mb-12 rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 bg-indigo-50 dark:bg-indigo-900"
+        >
+          <img
+            src="https://picsum.photos/seed/finance/600/400"
+            alt="财务SaaS系统和小程序"
+            class="w-full object-cover h-52 sm:h-64"
+          />
+          <div class="p-6">
+            <h3
+              class="text-2xl font-semibold mb-2 text-indigo-700 dark:text-indigo-300"
+            >
+              财务SaaS系统和小程序
+            </h3>
+            <p class="mb-3 text-gray-800 dark:text-gray-300">
+              财务管理SaaS系统及微信小程序，聚焦数据安全与高效报表生成，提升财务业务数字化水平。
+            </p>
+            <ul class="mb-4 text-gray-700 dark:text-gray-400 space-y-1">
+              <li>
+                <strong>技术栈：</strong>Vue, Nestjs, MySql, Redis, TypeScript
+              </li>
+              <li>
+                <strong>重难点：</strong
+                >数据加密传输，复杂报表交互设计，系统高并发处理
+              </li>
+              <li>
+                <strong>效果：</strong>数据处理效率提升35%，用户体验显著优化
+              </li>
+            </ul>
+            <div
+              class="flex flex-wrap gap-6 text-indigo-700 dark:text-indigo-400 font-semibold"
+            >
+              <a
+                href="https://github.com/example/finance-saas"
+                target="_blank"
+                class="hover:underline"
+                >代码仓库</a
+              >
+              <a
+                href="https://example.com/finance-saas"
+                target="_blank"
+                class="hover:underline"
+                >项目预览</a
+              >
+            </div>
+          </div>
+        </article>
+      </section>
+
+      <!-- 个人项目 -->
+      <section
+        id="personal-projects"
+        class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-8"
+      >
+        <h2
+          class="text-3xl font-bold mb-8 text-indigo-700 dark:text-indigo-400 border-b border-indigo-200 dark:border-indigo-700 pb-2"
+        >
+          个人项目
+        </h2>
+        <ul class="space-y-6 text-gray-800 dark:text-gray-300">
+          <li>
+            <h3
+              class="text-2xl font-semibold text-indigo-700 dark:text-indigo-300 mb-1"
+            >
+              Amazing-admin 系统（前后端）
+            </h3>
+            <p class="mb-1">
+              基于 Nestjs + TypeORM + MySQL
+              构建的企业级后台管理系统，支持权限管理、数据统计及多租户架构，具备良好的工程化和扩展性。
+            </p>
+          </li>
+          <li>
+            <h3
+              class="text-2xl font-semibold text-indigo-700 dark:text-indigo-300 mb-1"
+            >
+              工程化项目模板
+            </h3>
+            <p class="mb-1">
+              提供 SaaS 项目模板、H5
+              项目模板、小程序项目模板，帮助团队快速启动多类型项目，提升开发效率与代码规范。
+            </p>
+          </li>
+          <li>
+            <h3
+              class="text-2xl font-semibold text-indigo-700 dark:text-indigo-300 mb-1"
+            >
+              Nextjs + Prisma 电商项目
+            </h3>
+            <p class="mb-1">
+              基于 Nextjs 和 Prisma
+              实现的现代电商平台，支持商品管理、订单处理及支付集成，注重性能优化和SEO。
+            </p>
+          </li>
+          <li>
+            <h3
+              class="text-2xl font-semibold text-indigo-700 dark:text-indigo-300 mb-1"
+            >
+              Taro 小程序项目
+            </h3>
+            <p>
+              使用 Taro
+              框架开发的跨平台小程序，覆盖微信、支付宝等多个平台，实现统一代码管理与快速发布。
+            </p>
+          </li>
+        </ul>
+      </section>
+
+      <!-- 联系方式 -->
+      <section
+        id="contact"
+        class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-8 text-center"
+      >
+        <h2
+          class="text-3xl font-bold mb-6 text-indigo-700 dark:text-indigo-400 border-b border-indigo-200 dark:border-indigo-700 pb-2"
+        >
+          联系方式
+        </h2>
+        <p class="text-lg mb-4">欢迎联系我，期待合作！</p>
+        <div
+          class="flex flex-col sm:flex-row justify-center gap-8 text-indigo-700 dark:text-indigo-300 font-semibold select-text"
+        >
+          <a
+            href="mailto:youremail@example.com"
+            class="hover:underline flex items-center gap-2 justify-center"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-6 w-6 inline"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M16 12H8m8 0l-4 4m0-8l4 4m-4 4v-8"
+              />
+            </svg>
+            youremail@example.com
+          </a>
+          <a
+            href="tel:+8613800000000"
+            class="hover:underline flex items-center gap-2 justify-center"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-6 w-6 inline"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M3 5h2l3.6 7.59-1.35 2.44a11.042 11.042 0 005.49 5.49l2.44-1.35L19 19v2a2 2 0 01-2 2h-1a16 16 0 01-12-12V7a2 2 0 012-2z"
+              />
+            </svg>
+            +86 138 0000 0000
+          </a>
+          <a
+            href="https://github.com/yourgithub"
+            target="_blank"
+            class="hover:underline flex items-center gap-2 justify-center"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-6 w-6 inline"
+              fill="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="M12 .5C5.73.5.5 5.73.5 12c0 5.08 3.29 9.38 7.86 10.91.58.11.79-.25.79-.56 0-.28-.01-1.02-.02-2-3.2.7-3.88-1.54-3.88-1.54-.53-1.36-1.3-1.72-1.3-1.72-1.06-.72.08-.7.08-.7 1.17.08 1.78 1.2 1.78 1.2 1.04 1.77 2.73 1.26 3.4.96.11-.75.41-1.26.74-1.55-2.56-.29-5.26-1.28-5.26-5.7 0-1.26.45-2.29 1.2-3.1-.12-.3-.52-1.52.11-3.16 0 0 .97-.31 3.18 1.18a11.05 11.05 0 015.78 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.64.23 2.86.11 3.16.75.81 1.19 1.84 1.19 3.1 0 4.43-2.7 5.41-5.28 5.69.42.36.8 1.08.8 2.17 0 1.57-.01 2.83-.01 3.22 0 .31.21.68.8.56A10.51 10.51 0 0023.5 12c0-6.27-5.23-11.5-11.5-11.5z"
+              />
+            </svg>
+            GitHub
+          </a>
+        </div>
+      </section>
+    </main>
+
+    <footer
+      class="bg-white dark:bg-gray-800 border-t border-gray-300 dark:border-gray-700 text-center py-6 text-gray-500 dark:text-gray-400 text-sm select-none"
+    >
+      © 2025 高级前端开发工程师 Portfolio
+    </footer>
+
+    <script>
+      // 主题切换逻辑
+      const themeToggleBtn = document.getElementById("theme-toggle");
+      const iconSun = document.getElementById("icon-sun");
+      const iconMoon = document.getElementById("icon-moon");
+
+      function setTheme(theme) {
+        if (theme === "dark") {
+          document.documentElement.classList.add("dark");
+          iconSun.classList.remove("hidden");
+          iconMoon.classList.add("hidden");
+          localStorage.setItem("theme", "dark");
+        } else {
+          document.documentElement.classList.remove("dark");
+          iconSun.classList.add("hidden");
+          iconMoon.classList.remove("hidden");
+          localStorage.setItem("theme", "light");
+        }
+      }
+
+      // 初始化主题
+      (function () {
+        const savedTheme = localStorage.getItem("theme");
+        if (savedTheme) {
+          setTheme(savedTheme);
+        } else {
+          // 根据系统偏好设置
+          const prefersDark = window.matchMedia(
+            "(prefers-color-scheme: dark)"
+          ).matches;
+          setTheme(prefersDark ? "dark" : "light");
+        }
+      })();
+
+      themeToggleBtn.addEventListener("click", () => {
+        if (document.documentElement.classList.contains("dark")) {
+          setTheme("light");
+        } else {
+          setTheme("dark");
+        }
+      });
+    </script>
+  </body>
+</html>
