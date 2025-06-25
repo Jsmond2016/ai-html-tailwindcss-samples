@@ -56,3 +56,8 @@ http-server
 ## 其他
 
 参考 [v0.dev](https://v0.dev/chat/projects) 的生成结果：可以生成项目而非仅仅一个 html 页面；
+
+看看2个效果：
+
+- [portolio](https://v0-frontend-portfolio-page-seven.vercel.app/)
+- [AIGC Navigator](https://v0-frontend-portfolio-page-seven.vercel.app/)
