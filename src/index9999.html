@@ -1,0 +1,972 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>高级前端开发工程师 | 个人作品集</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              primary: "#3b82f6",
+              secondary: "#8b5cf6",
+              dark: {
+                800: "#1e293b",
+                900: "#0f172a",
+              },
+            },
+            animation: {
+              "bounce-slow": "bounce 3s infinite",
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap");
+
+      body {
+        font-family: "Inter", sans-serif;
+        background-color: #f8fafc;
+        transition: background-color 0.3s, color 0.3s;
+      }
+
+      .dark body {
+        background-color: #0f172a;
+        color: #e2e8f0;
+      }
+
+      .section {
+        padding: 5rem 1.5rem;
+      }
+
+      .timeline-item:before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -20px;
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background: #3b82f6;
+      }
+
+      .tech-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+      }
+
+      .project-card {
+        transition: all 0.3s ease;
+        overflow: hidden;
+      }
+
+      .project-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
+          0 10px 10px -5px rgba(0, 0, 0, 0.04);
+      }
+
+      .project-image {
+        transition: transform 0.5s ease;
+      }
+
+      .project-card:hover .project-image {
+        transform: scale(1.05);
+      }
+
+      .theme-toggle {
+        transition: all 0.3s ease;
+      }
+
+      .theme-toggle:hover {
+        transform: rotate(15deg);
+      }
+
+      .avatar {
+        border: 3px solid #3b82f6;
+        transition: all 0.3s ease;
+      }
+
+      .avatar:hover {
+        transform: scale(1.05);
+        box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.3);
+      }
+
+      .nav-link:after {
+        content: "";
+        position: absolute;
+        bottom: -5px;
+        left: 0;
+        width: 0;
+        height: 2px;
+        background: #3b82f6;
+        transition: width 0.3s ease;
+      }
+
+      .nav-link:hover:after {
+        width: 100%;
+      }
+
+      .nav-link.active:after {
+        width: 100%;
+      }
+
+      .section-title {
+        position: relative;
+        display: inline-block;
+        margin-bottom: 3rem;
+      }
+
+      .section-title:after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: -10px;
+        width: 50%;
+        height: 3px;
+        background: #3b82f6;
+      }
+
+      .skill-bar {
+        height: 8px;
+        border-radius: 4px;
+        overflow: hidden;
+        background-color: #e2e8f0;
+      }
+
+      .skill-progress {
+        height: 100%;
+        border-radius: 4px;
+        background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+      }
+
+      .cert-badge {
+        transition: all 0.3s ease;
+      }
+
+      .cert-badge:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+      }
+    </style>
+  </head>
+  <body
+    class="bg-slate-50 text-slate-800 dark:bg-slate-900 dark:text-slate-200"
+  >
+    <!-- 导航栏 -->
+    <nav
+      class="fixed w-full bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm z-50 shadow-sm"
+    >
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center h-16">
+          <!-- 网站标题 -->
+          <div class="flex-shrink-0 flex items-center">
+            <span class="text-xl font-bold text-primary">DevPortfolio</span>
+          </div>
+
+          <!-- 导航菜单 -->
+          <div class="hidden md:block">
+            <div class="ml-10 flex items-center space-x-8">
+              <a href="#about" class="nav-link relative px-3 py-2 font-medium"
+                >关于我</a
+              >
+              <a
+                href="#education"
+                class="nav-link relative px-3 py-2 font-medium"
+                >教育背景</a
+              >
+              <a href="#skills" class="nav-link relative px-3 py-2 font-medium"
+                >技术栈</a
+              >
+              <a
+                href="#additional"
+                class="nav-link relative px-3 py-2 font-medium"
+                >其他技能</a
+              >
+              <a
+                href="#experience"
+                class="nav-link relative px-3 py-2 font-medium"
+                >工作经历</a
+              >
+              <a
+                href="#projects"
+                class="nav-link relative px-3 py-2 font-medium"
+                >项目展示</a
+              >
+              <a href="#contact" class="nav-link relative px-3 py-2 font-medium"
+                >联系方式</a
+              >
+            </div>
+          </div>
+
+          <!-- 右侧按钮 -->
+          <div class="flex items-center space-x-4">
+            <!-- 主题切换 -->
+            <button
+              id="theme-toggle"
+              class="theme-toggle p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-700"
+            >
+              <i
+                class="fas fa-moon text-slate-700 dark:text-yellow-400 dark:hidden"
+              ></i>
+              <i class="fas fa-sun text-yellow-400 dark:block hidden"></i>
+            </button>
+
+            <!-- 预览简历按钮 -->
+            <a
+              href="#"
+              class="bg-primary hover:bg-blue-600 text-white px-4 py-2 rounded-lg font-medium transition duration-300"
+            >
+              预览简历
+            </a>
+
+            <!-- 移动端菜单按钮 -->
+            <button
+              id="mobile-menu-button"
+              class="md:hidden p-2 rounded-md text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700"
+            >
+              <i class="fas fa-bars"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 移动端菜单 -->
+      <div id="mobile-menu" class="md:hidden hidden bg-white dark:bg-slate-800">
+        <div class="px-2 pt-2 pb-3 space-y-1">
+          <a href="#about" class="block px-3 py-2 font-medium">关于我</a>
+          <a href="#education" class="block px-3 py-2 font-medium">教育背景</a>
+          <a href="#skills" class="block px-3 py-2 font-medium">技术栈</a>
+          <a href="#additional" class="block px-3 py-2 font-medium">其他技能</a>
+          <a href="#experience" class="block px-3 py-2 font-medium">工作经历</a>
+          <a href="#projects" class="block px-3 py-2 font-medium">项目展示</a>
+          <a href="#contact" class="block px-3 py-2 font-medium">联系方式</a>
+        </div>
+      </div>
+    </nav>
+
+    <!-- 关于我部分 -->
+    <section id="about" class="section pt-24">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h2 class="section-title text-3xl font-bold">关于我</h2>
+
+        <div
+          class="flex flex-col md:flex-row items-center md:items-start gap-10"
+        >
+          <!-- 头像 -->
+          <div class="flex-shrink-0">
+            <div
+              class="avatar rounded-full overflow-hidden border-4 border-white dark:border-slate-800 shadow-xl w-48 h-48"
+            >
+              <div
+                class="bg-gradient-to-r from-blue-400 to-indigo-600 w-full h-full flex items-center justify-center text-white text-6xl"
+              >
+                <i class="fas fa-user"></i>
+              </div>
+            </div>
+          </div>
+
+          <!-- 个人介绍 -->
+          <div class="flex-grow">
+            <h3 class="text-2xl font-bold mb-4">
+              高级前端开发工程师 | 6年经验
+            </h3>
+            <p class="text-lg mb-6">
+              我是一名拥有6年经验的高级前端开发工程师，专注于构建高性能、可扩展的Web应用。擅长现代JavaScript框架（React、Vue），精通前端架构设计和性能优化，致力于提升用户体验和开发效率。
+            </p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div class="bg-white dark:bg-slate-800 p-6 rounded-xl shadow-sm">
+                <h4 class="font-bold text-lg text-primary mb-3">技术专长</h4>
+                <ul class="space-y-2">
+                  <li class="flex items-start">
+                    <i class="fas fa-code text-primary mt-1 mr-2"></i>
+                    <span>前端架构设计、微前端实施、组件库开发</span>
+                  </li>
+                  <li class="flex items-start">
+                    <i class="fas fa-bolt text-primary mt-1 mr-2"></i>
+                    <span>性能优化（加载速度提升60%+，FCP减少40%）</span>
+                  </li>
+                  <li class="flex items-start">
+                    <i class="fas fa-mobile-alt text-primary mt-1 mr-2"></i>
+                    <span>响应式设计、PWA、WebGL可视化</span>
+                  </li>
+                </ul>
+              </div>
+
+              <div class="bg-white dark:bg-slate-800 p-6 rounded-xl shadow-sm">
+                <h4 class="font-bold text-lg text-primary mb-3">团队协作</h4>
+                <ul class="space-y-2">
+                  <li class="flex items-start">
+                    <i class="fas fa-users text-primary mt-1 mr-2"></i>
+                    <span>技术团队管理（5-8人）、跨职能协作</span>
+                  </li>
+                  <li class="flex items-start">
+                    <i class="fas fa-book text-primary mt-1 mr-2"></i>
+                    <span>技术文档规范、代码审查、新人培养</span>
+                  </li>
+                  <li class="flex items-start">
+                    <i class="fas fa-lightbulb text-primary mt-1 mr-2"></i>
+                    <span>技术方案选型、架构评审、DevOps流程优化</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 教育背景部分 -->
+    <section id="education" class="section bg-slate-100 dark:bg-slate-800">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h2 class="section-title text-3xl font-bold">教育背景</h2>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-10">
+          <!-- 教育项目 1 -->
+          <div
+            class="bg-white dark:bg-slate-800 p-6 rounded-xl shadow-sm flex items-start"
+          >
+            <div
+              class="bg-gradient-to-r from-blue-500 to-indigo-600 w-16 h-16 rounded-lg flex items-center justify-center mr-6"
+            >
+              <i class="fas fa-graduation-cap text-white text-2xl"></i>
+            </div>
+            <div>
+              <h3 class="text-xl font-bold">计算机科学与技术 硕士</h3>
+              <div class="text-primary font-medium mb-2">
+                北京大学 | 2014 - 2017
+              </div>
+              <p class="text-slate-600 dark:text-slate-300 mb-3">
+                主修课程：高级算法、分布式系统、人机交互设计、Web技术前沿
+              </p>
+              <div class="flex flex-wrap gap-2">
+                <span
+                  class="bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-200 px-3 py-1 rounded-full text-sm"
+                  >GPA 3.8/4.0</span
+                >
+                <span
+                  class="bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-200 px-3 py-1 rounded-full text-sm"
+                  >专业前10%</span
+                >
+              </div>
+            </div>
+          </div>
+
+          <!-- 教育项目 2 -->
+          <div
+            class="bg-white dark:bg-slate-800 p-6 rounded-xl shadow-sm flex items-start"
+          >
+            <div
+              class="bg-gradient-to-r from-green-500 to-teal-600 w-16 h-16 rounded-lg flex items-center justify-center mr-6"
+            >
+              <i class="fas fa-graduation-cap text-white text-2xl"></i>
+            </div>
+            <div>
+              <h3 class="text-xl font-bold">软件工程 学士</h3>
+              <div class="text-primary font-medium mb-2">
+                浙江大学 | 2010 - 2014
+              </div>
+              <p class="text-slate-600 dark:text-slate-300 mb-3">
+                主修课程：数据结构、计算机网络、软件工程、Web前端开发
+              </p>
+              <div class="flex flex-wrap gap-2">
+                <span
+                  class="bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-200 px-3 py-1 rounded-full text-sm"
+                  >GPA 3.7/4.0</span
+                >
+                <span
+                  class="bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-200 px-3 py-1 rounded-full text-sm"
+                  >优秀毕业生</span
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 技术栈部分 -->
+    <section id="skills" class="section">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h2 class="section-title text-3xl font-bold">技术栈</h2>
+
+        <div
+          class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6 mt-10"
+        >
+          <!-- 技术卡片 - 通过JS渲染 -->
+        </div>
+      </div>
+    </section>
+
+    <!-- 其他技能部分 -->
+    <section id="additional" class="section bg-slate-100 dark:bg-slate-800">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h2 class="section-title text-3xl font-bold">其他技能</h2>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-10 mt-10">
+          <!-- 语言能力 -->
+          <div class="bg-white dark:bg-slate-800 p-6 rounded-xl shadow-sm">
+            <h3 class="text-xl font-bold mb-6 flex items-center">
+              <i class="fas fa-language text-primary text-2xl mr-3"></i>
+              语言能力
+            </h3>
+
+            <div class="space-y-6">
+              <div>
+                <div class="flex justify-between mb-2">
+                  <span class="font-medium">英语</span>
+                  <span class="text-primary font-bold">专业八级</span>
+                </div>
+                <div class="skill-bar">
+                  <div class="skill-progress" style="width: 95%"></div>
+                </div>
+                <div class="mt-2 text-sm text-slate-500 dark:text-slate-400">
+                  流利沟通能力，技术文档撰写，国际会议演讲经验
+                </div>
+              </div>
+
+              <div>
+                <div class="flex justify-between mb-2">
+                  <span class="font-medium">日语</span>
+                  <span class="text-primary font-bold">N2</span>
+                </div>
+                <div class="skill-bar">
+                  <div class="skill-progress" style="width: 75%"></div>
+                </div>
+                <div class="mt-2 text-sm text-slate-500 dark:text-slate-400">
+                  技术文档阅读能力，基础沟通能力
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 证书与认证 -->
+          <div class="bg-white dark:bg-slate-800 p-6 rounded-xl shadow-sm">
+            <h3 class="text-xl font-bold mb-6 flex items-center">
+              <i class="fas fa-award text-secondary text-2xl mr-3"></i>
+              证书与认证
+            </h3>
+
+            <div class="grid grid-cols-2 gap-4">
+              <div
+                class="cert-badge bg-blue-50 dark:bg-blue-900/30 p-4 rounded-lg border border-blue-200 dark:border-blue-700/50"
+              >
+                <div class="text-blue-500 dark:text-blue-300 text-3xl mb-2">
+                  <i class="fab fa-aws"></i>
+                </div>
+                <h4 class="font-bold">AWS 解决方案架构师</h4>
+                <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">
+                  2022年认证
+                </p>
+              </div>
+
+              <div
+                class="cert-badge bg-purple-50 dark:bg-purple-900/30 p-4 rounded-lg border border-purple-200 dark:border-purple-700/50"
+              >
+                <div class="text-purple-500 dark:text-purple-300 text-3xl mb-2">
+                  <i class="fab fa-google"></i>
+                </div>
+                <h4 class="font-bold">Google UX 设计证书</h4>
+                <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">
+                  2021年认证
+                </p>
+              </div>
+
+              <div
+                class="cert-badge bg-red-50 dark:bg-red-900/30 p-4 rounded-lg border border-red-200 dark:border-red-700/50"
+              >
+                <div class="text-red-500 dark:text-red-300 text-3xl mb-2">
+                  <i class="fas fa-code"></i>
+                </div>
+                <h4 class="font-bold">前端性能优化专家</h4>
+                <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">
+                  Web性能联盟
+                </p>
+              </div>
+
+              <div
+                class="cert-badge bg-green-50 dark:bg-green-900/30 p-4 rounded-lg border border-green-200 dark:border-green-700/50"
+              >
+                <div class="text-green-500 dark:text-green-300 text-3xl mb-2">
+                  <i class="fas fa-shield-alt"></i>
+                </div>
+                <h4 class="font-bold">Web安全专家</h4>
+                <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">
+                  OWASP认证
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 工作经历部分 -->
+    <section id="experience" class="section">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h2 class="section-title text-3xl font-bold">工作经历</h2>
+
+        <div class="relative pl-8 mt-10 border-l-2 border-primary">
+          <!-- 时间线项目 - 通过JS渲染 -->
+        </div>
+      </div>
+    </section>
+
+    <!-- 项目展示部分 -->
+    <section id="projects" class="section bg-slate-100 dark:bg-slate-800">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h2 class="section-title text-3xl font-bold">项目展示</h2>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-10 mt-12">
+          <!-- 项目卡片 - 通过JS渲染 -->
+        </div>
+      </div>
+    </section>
+
+    <!-- 联系方式部分 -->
+    <section id="contact" class="section">
+      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h2 class="section-title text-3xl font-bold">联系我</h2>
+        <p class="text-xl mb-12 max-w-2xl mx-auto">
+          如果您对我的工作经验感兴趣，或者有任何项目合作机会，欢迎随时与我联系！
+        </p>
+
+        <div
+          class="flex flex-col sm:flex-row justify-center items-center gap-8"
+        >
+          <!-- 联系方式卡片 - 通过JS渲染 -->
+        </div>
+      </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer class="bg-slate-800 text-white py-8">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <p>© 2023 高级前端开发工程师作品集. 保留所有权利</p>
+        <div class="flex justify-center space-x-6 mt-4">
+          <a href="#" class="hover:text-primary transition-colors">
+            <i class="fab fa-linkedin-in"></i>
+          </a>
+          <a href="#" class="hover:text-primary transition-colors">
+            <i class="fab fa-twitter"></i>
+          </a>
+          <a href="#" class="hover:text-primary transition-colors">
+            <i class="fab fa-medium-m"></i>
+          </a>
+          <a href="#" class="hover:text-primary transition-colors">
+            <i class="fab fa-stack-overflow"></i>
+          </a>
+        </div>
+      </div>
+    </footer>
+
+    <!-- 数据配置 -->
+    <script>
+      // 页面配置数据
+      const portfolioData = {
+        // 技术栈数据
+        skills: [
+          {
+            name: "React",
+            level: "精通",
+            icon: "fab fa-react",
+            color: "text-blue-500",
+          },
+          {
+            name: "Vue.js",
+            level: "精通",
+            icon: "fab fa-vuejs",
+            color: "text-green-500",
+          },
+          {
+            name: "JavaScript",
+            level: "专家",
+            icon: "fab fa-js",
+            color: "text-yellow-500",
+          },
+          {
+            name: "TypeScript",
+            level: "精通",
+            icon: "fas fa-code",
+            color: "text-blue-400",
+          },
+          {
+            name: "Node.js",
+            level: "熟练",
+            icon: "fab fa-node-js",
+            color: "text-green-600",
+          },
+          {
+            name: "HTML5/CSS3",
+            level: "专家",
+            icon: "fab fa-html5",
+            color: "text-orange-500",
+          },
+          {
+            name: "Tailwind CSS",
+            level: "精通",
+            icon: "fas fa-paint-brush",
+            color: "text-teal-500",
+          },
+          {
+            name: "GraphQL",
+            level: "熟练",
+            icon: "fas fa-project-diagram",
+            color: "text-pink-500",
+          },
+          {
+            name: "Webpack",
+            level: "精通",
+            icon: "fas fa-cube",
+            color: "text-blue-300",
+          },
+          {
+            name: "Docker",
+            level: "熟练",
+            icon: "fab fa-docker",
+            color: "text-blue-400",
+          },
+          {
+            name: "Git",
+            level: "专家",
+            icon: "fab fa-git-alt",
+            color: "text-orange-600",
+          },
+          {
+            name: "CI/CD",
+            level: "熟练",
+            icon: "fas fa-sync-alt",
+            color: "text-purple-500",
+          },
+        ],
+
+        // 工作经历数据
+        experiences: [
+          {
+            position: "高级前端开发工程师",
+            company: "科技创新有限公司",
+            period: "2021 - 至今",
+            achievements: [
+              "主导前端架构升级，引入微前端架构，将单体应用拆分为5个独立子应用，提升团队并行开发能力",
+              "设计并实现公司级UI组件库，被10+项目采用，减少重复开发时间30%",
+              "优化CI/CD流程，将前端部署时间从15分钟缩短至3分钟，提升发布效率",
+              "指导3名初级开发人员，组织技术分享会，提升团队整体技术水平",
+            ],
+          },
+          {
+            position: "前端开发工程师",
+            company: "互联网科技有限公司",
+            period: "2019 - 2021",
+            achievements: [
+              "负责电商平台前端开发，使用Vue.js重构旧系统，性能提升45%",
+              "实现复杂数据可视化模块，处理百万级数据点前端渲染优化",
+              "引入PWA技术，提升移动端用户体验，用户留存率提高20%",
+              "设计前端监控系统，错误捕获率提升至98%，减少用户投诉",
+            ],
+          },
+          {
+            position: "Web开发工程师",
+            company: "数字解决方案有限公司",
+            period: "2017 - 2019",
+            achievements: [
+              "开发企业级管理系统，使用React技术栈实现复杂表单和审批流程",
+              "优化前端构建流程，引入Webpack优化策略，打包体积减少40%",
+              "实现SSR渲染方案，首屏加载时间减少65%，提升SEO效果",
+              "参与API设计，与后端团队协作优化数据交互格式",
+            ],
+          },
+        ],
+
+        // 项目数据
+        projects: [
+          {
+            title: "企业级微前端平台",
+            description:
+              "设计并实现基于微前端架构的企业级平台，支持多个团队并行开发，独立部署。",
+            technologies: ["React", "Module Federation", "Webpack 5"],
+            challenges: [
+              "跨应用状态管理：设计全局状态共享机制，解决子应用通信问题",
+              "样式隔离：采用CSS Modules和Shadow DOM实现样式隔离",
+              "性能优化：按需加载子应用，首屏加载时间减少40%",
+            ],
+            result: "团队开发效率提升50%，部署频率提高3倍，系统稳定性达99.9%",
+            gradient: "from-blue-400 to-indigo-600",
+          },
+          {
+            title: "高性能数据可视化平台",
+            description:
+              "开发支持百万级数据点实时渲染的可视化平台，提供丰富的数据分析功能。",
+            technologies: ["Vue 3", "WebGL", "D3.js"],
+            challenges: [
+              "大数据渲染：使用WebGL和Canvas混合渲染方案，FPS稳定在60",
+              "内存优化：实现虚拟滚动和增量数据加载，内存占用减少70%",
+              "交互体验：优化用户交互响应时间，实现流畅的缩放和拖拽体验",
+            ],
+            result:
+              "处理数据量提升10倍，用户操作响应时间<100ms，获得客户高度评价",
+            gradient: "from-purple-400 to-pink-600",
+          },
+        ],
+
+        // 联系方式数据
+        contacts: [
+          {
+            type: "邮箱",
+            value: "contact@example.com",
+            icon: "fas fa-envelope",
+            color: "text-blue-500",
+            bg: "bg-blue-100 dark:bg-blue-900/30",
+          },
+          {
+            type: "电话",
+            value: "+1 (234) 567-890",
+            icon: "fas fa-phone-alt",
+            color: "text-green-500",
+            bg: "bg-green-100 dark:bg-green-900/30",
+          },
+          {
+            type: "GitHub",
+            value: "github.com/username",
+            icon: "fab fa-github",
+            color: "text-purple-500",
+            bg: "bg-purple-100 dark:bg-purple-900/30",
+          },
+        ],
+      };
+
+      // 渲染技术栈
+      function renderSkills() {
+        const skillsContainer = document.querySelector("#skills .grid");
+        skillsContainer.innerHTML = "";
+
+        portfolioData.skills.forEach((skill) => {
+          const skillCard = document.createElement("div");
+          skillCard.className =
+            "tech-card bg-white dark:bg-slate-800 p-6 rounded-xl shadow-sm flex flex-col items-center transition-all duration-300";
+          skillCard.innerHTML = `
+                    <i class="${skill.icon} text-4xl ${skill.color} mb-3"></i>
+                    <h3 class="font-bold">${skill.name}</h3>
+                    <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">${skill.level}</p>
+                `;
+          skillsContainer.appendChild(skillCard);
+        });
+      }
+
+      // 渲染工作经历
+      function renderExperiences() {
+        const experiencesContainer = document.querySelector(
+          "#experience .border-l-2"
+        );
+        experiencesContainer.innerHTML = "";
+
+        portfolioData.experiences.forEach((exp, index) => {
+          const expElement = document.createElement("div");
+          expElement.className = `timeline-item relative ${
+            index < portfolioData.experiences.length - 1 ? "mb-12" : ""
+          }`;
+          expElement.innerHTML = `
+                    <div class="bg-white dark:bg-slate-800 p-6 rounded-xl shadow-sm">
+                        <div class="flex flex-wrap justify-between items-center mb-4">
+                            <span class="text-lg font-bold">${
+                              exp.position
+                            }</span>
+                            <span class="bg-primary/10 text-primary px-3 py-1 rounded-full text-sm">${
+                              exp.period
+                            }</span>
+                        </div>
+                        <div class="text-lg font-semibold text-slate-700 dark:text-slate-300 mb-3">${
+                          exp.company
+                        }</div>
+                        <ul class="space-y-2">
+                            ${exp.achievements
+                              .map(
+                                (ach) => `
+                                <li class="flex items-start">
+                                    <i class="fas fa-circle text-xs text-primary mt-2 mr-2"></i>
+                                    <span>${ach}</span>
+                                </li>
+                            `
+                              )
+                              .join("")}
+                        </ul>
+                    </div>
+                `;
+          experiencesContainer.appendChild(expElement);
+        });
+      }
+
+      // 渲染项目
+      function renderProjects() {
+        const projectsContainer = document.querySelector("#projects .grid");
+        projectsContainer.innerHTML = "";
+
+        portfolioData.projects.forEach((project) => {
+          const projectCard = document.createElement("div");
+          projectCard.className =
+            "project-card bg-white dark:bg-slate-800 rounded-xl shadow-md overflow-hidden";
+          projectCard.innerHTML = `
+                    <div class="h-48 overflow-hidden">
+                        <div class="project-image bg-gradient-to-r ${
+                          project.gradient
+                        } w-full h-full"></div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2">${project.title}</h3>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            ${project.technologies
+                              .map(
+                                (tech) => `
+                                <span class="bg-blue-100 dark:bg-blue-900/50 text-blue-800 dark:text-blue-200 px-3 py-1 rounded-full text-sm">${tech}</span>
+                            `
+                              )
+                              .join("")}
+                        </div>
+                        <p class="text-slate-600 dark:text-slate-300 mb-4">
+                            ${project.description}
+                        </p>
+                        <div class="mb-4">
+                            <h4 class="font-bold mb-2">关键挑战与解决方案：</h4>
+                            <ul class="space-y-2">
+                                ${project.challenges
+                                  .map(
+                                    (challenge) => `
+                                    <li class="flex items-start">
+                                        <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                                        <span>${challenge}</span>
+                                    </li>
+                                `
+                                  )
+                                  .join("")}
+                            </ul>
+                        </div>
+                        <div class="bg-green-50 dark:bg-green-900/30 p-3 rounded-lg">
+                            <h4 class="font-bold text-green-700 dark:text-green-300 mb-1">成果：</h4>
+                            <p>${project.result}</p>
+                        </div>
+                    </div>
+                `;
+          projectsContainer.appendChild(projectCard);
+        });
+      }
+
+      // 渲染联系方式
+      function renderContacts() {
+        const contactsContainer = document.querySelector("#contact .flex");
+        contactsContainer.innerHTML = "";
+
+        portfolioData.contacts.forEach((contact) => {
+          const contactElement = document.createElement("a");
+          contactElement.href = "#";
+          contactElement.className =
+            "flex flex-col items-center p-6 rounded-xl shadow-sm hover:shadow-md transition-shadow w-56";
+          contactElement.innerHTML = `
+                    <div class="w-16 h-16 rounded-full ${contact.bg} flex items-center justify-center mb-4">
+                        <i class="${contact.icon} ${contact.color} text-2xl"></i>
+                    </div>
+                    <h3 class="font-bold mb-2">${contact.type}</h3>
+                    <p class="text-slate-600 dark:text-slate-300">${contact.value}</p>
+                `;
+
+          if (contact.type === "GitHub") {
+            contactElement.href = "https://github.com/username";
+            contactElement.target = "_blank";
+          }
+
+          contactsContainer.appendChild(contactElement);
+        });
+      }
+
+      // 初始化页面渲染
+      function initPortfolio() {
+        renderSkills();
+        renderExperiences();
+        renderProjects();
+        renderContacts();
+
+        // 主题切换功能
+        const themeToggle = document.getElementById("theme-toggle");
+
+        if (
+          localStorage.getItem("color-theme") === "dark" ||
+          (!("color-theme" in localStorage) &&
+            window.matchMedia("(prefers-color-scheme: dark)").matches)
+        ) {
+          document.documentElement.classList.add("dark");
+        } else {
+          document.documentElement.classList.remove("dark");
+        }
+
+        themeToggle.addEventListener("click", function () {
+          if (document.documentElement.classList.contains("dark")) {
+            document.documentElement.classList.remove("dark");
+            localStorage.setItem("color-theme", "light");
+          } else {
+            document.documentElement.classList.add("dark");
+            localStorage.setItem("color-theme", "dark");
+          }
+        });
+
+        // 移动端菜单切换
+        const mobileMenuButton = document.getElementById("mobile-menu-button");
+        const mobileMenu = document.getElementById("mobile-menu");
+
+        mobileMenuButton.addEventListener("click", function () {
+          mobileMenu.classList.toggle("hidden");
+        });
+
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+          anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+
+            const target = document.querySelector(this.getAttribute("href"));
+            if (target) {
+              target.scrollIntoView({
+                behavior: "smooth",
+              });
+
+              // 关闭移动端菜单
+              mobileMenu.classList.add("hidden");
+            }
+          });
+        });
+
+        // 导航链接激活状态
+        window.addEventListener("scroll", function () {
+          const sections = document.querySelectorAll("section");
+          const navLinks = document.querySelectorAll(".nav-link");
+
+          let currentSection = "";
+
+          sections.forEach((section) => {
+            const sectionTop = section.offsetTop;
+            const sectionHeight = section.clientHeight;
+
+            if (pageYOffset >= sectionTop - 200) {
+              currentSection = section.getAttribute("id");
+            }
+          });
+
+          navLinks.forEach((link) => {
+            link.classList.remove("active");
+            if (link.getAttribute("href") === `#${currentSection}`) {
+              link.classList.add("active");
+            }
+          });
+        });
+      }
+
+      // 页面加载完成后初始化
+      document.addEventListener("DOMContentLoaded", initPortfolio);
+    </script>
+  </body>
+</html>

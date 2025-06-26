@@ -51,6 +51,7 @@ http-server
 - [demo-7](http://127.0.0.1:8080/src/index7)
 - [demo-9](http://127.0.0.1:8080/src/index9)
 - [demo-999](http://127.0.0.1:8080/src/index999) 在官网使用 DeepSeek R1 生成；
+- [demo-9999](http://127.0.0.1:8080/src/index9999) 在官网使用 DeepSeek R1 生成；
 
 
 ## 其他
