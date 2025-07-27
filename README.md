@@ -33,4 +33,4 @@
 看看2个效果：
 
 - [portolio](https://v0-frontend-portfolio-page-seven.vercel.app/)
-- [AIGC Navigator](https://v0-frontend-portfolio-page-seven.vercel.app/)
+- [AIGC Navigator](https://v0-aigc-navigation-website.vercel.app/)
