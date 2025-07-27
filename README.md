@@ -8,7 +8,7 @@
 
 表格
 
-| 项目      | 项目说明            | AI 提示词链接                                                                                   | 链接                                                                        |
+| 项目      | 项目说明            | AI 提示词链接                                                                                   | 预览链接                                                                    |
 | --------- | ------------------- | ----------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------- |
 | sample-01 | portfolio简单版本   | [链接](https://github.com/Jsmond2016/ai-html-tailwindcss-samples/blob/main/sample-01/README.MD) | [链接](https://jsmond2016.github.io/ai-html-tailwindcss-samples/sample-01/) |
 | sample-02 | portfolio进阶版本   | [链接](https://github.com/Jsmond2016/ai-html-tailwindcss-samples/blob/main/sample-02/README.MD) | [链接](https://jsmond2016.github.io/ai-html-tailwindcss-samples/sample-02/) |
