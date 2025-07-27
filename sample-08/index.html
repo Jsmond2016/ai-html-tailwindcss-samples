@@ -1,0 +1,985 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Dashboard - 紫色主题管理系统</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+      :root {
+        --primary: #8b5cf6;
+        --primary-light: #c4b5fd;
+        --primary-dark: #7c3aed;
+        --accent: #fbcfe8;
+        --text-primary: #1f2937;
+        --text-secondary: #6b7280;
+        --bg-light: #f9fafb;
+        --bg-dark: #111827;
+        --card-light: #ffffff;
+        --card-dark: #1f2937;
+        --sidebar-light: #f3f4f6;
+        --sidebar-dark: #1f2937;
+      }
+
+      .dark-theme {
+        --text-primary: #f9fafb;
+        --text-secondary: #d1d5db;
+        --bg-light: var(--bg-dark);
+        --bg-dark: #030712;
+        --card-light: var(--card-dark);
+        --card-dark: #111827;
+        --sidebar-light: var(--sidebar-dark);
+        --sidebar-dark: #030712;
+      }
+
+      body {
+        background-color: var(--bg-light);
+        color: var(--text-primary);
+        transition: background-color 0.3s, color 0.3s;
+        font-family: "Inter", sans-serif;
+      }
+
+      .sidebar {
+        background-color: var(--sidebar-light);
+        transition: background-color 0.3s;
+      }
+
+      .card {
+        background-color: var(--card-light);
+        transition: background-color 0.3s;
+      }
+
+      .theme-transition * {
+        transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+      }
+
+      .nav-item:hover {
+        background-color: var(--primary-light);
+        color: var(--primary-dark);
+      }
+
+      .nav-item.active {
+        background-color: var(--primary);
+        color: white;
+      }
+
+      .chart-container {
+        height: 250px;
+      }
+    </style>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              primary: "#8B5CF6",
+              "primary-light": "#C4B5FD",
+              "primary-dark": "#7C3AED",
+              accent: "#FBCFE8",
+            },
+          },
+        },
+      };
+    </script>
+  </head>
+  <body class="theme-transition">
+    <div class="flex h-screen overflow-hidden">
+      <!-- 侧边导航栏 -->
+      <div
+        class="sidebar w-64 flex-shrink-0 hidden md:flex flex-col border-r border-gray-200 dark:border-gray-700"
+      >
+        <div class="p-4 flex items-center">
+          <div
+            class="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-white font-bold"
+          >
+            A
+          </div>
+          <div class="ml-3">
+            <h2 class="font-bold text-lg">Admin Dashboard</h2>
+            <p class="text-xs text-gray-500">v2.0.1</p>
+          </div>
+        </div>
+
+        <nav class="flex-1 mt-6 px-2">
+          <div class="text-xs uppercase text-gray-500 font-semibold px-4 mb-2">
+            主菜单
+          </div>
+          <a
+            href="#"
+            class="nav-item active flex items-center px-4 py-3 rounded-lg transition-colors mb-1"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-5 w-5 mr-3"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+            >
+              <path
+                d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"
+              />
+            </svg>
+            Dashboard
+          </a>
+
+          <a
+            href="#"
+            class="nav-item flex items-center px-4 py-3 rounded-lg transition-colors mb-1"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-5 w-5 mr-3"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M4 4a2 2 0 00-2 2v4a2 2 0 002 2V6h10a2 2 0 00-2-2H4zm2 6a2 2 0 012-2h8a2 2 0 012 2v4a2 2 0 01-2 2H8a2 2 0 01-2-2v-4zm6 4a2 2 0 100-4 2 2 0 000 4z"
+                clip-rule="evenodd"
+              />
+            </svg>
+            项目统计
+          </a>
+
+          <a
+            href="#"
+            class="nav-item flex items-center px-4 py-3 rounded-lg transition-colors mb-1"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-5 w-5 mr-3"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-6-3a2 2 0 11-4 0 2 2 0 014 0zm-2 4a5 5 0 00-4.546 2.916A5.986 5.986 0 005 10a6 6 0 0012 0c0-.35-.03-.699-.086-1.034A5 5 0 0010 11z"
+                clip-rule="evenodd"
+              />
+            </svg>
+            客户管理
+          </a>
+
+          <a
+            href="#"
+            class="nav-item flex items-center px-4 py-3 rounded-lg transition-colors mb-1"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-5 w-5 mr-3"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+            >
+              <path
+                d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"
+              />
+              <path
+                d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"
+              />
+            </svg>
+            邮件系统
+          </a>
+
+          <a
+            href="#"
+            class="nav-item flex items-center px-4 py-3 rounded-lg transition-colors mb-1"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-5 w-5 mr-3"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M3 3a1 1 0 000 2v8a2 2 0 002 2h2.586l-1.293 1.293a1 1 0 101.414 1.414L10 15.414l2.293 2.293a1 1 0 001.414-1.414L12.414 15H15a2 2 0 002-2V5a1 1 0 100-2H3zm11.707 4.707a1 1 0 00-1.414-1.414L10 9.586 8.707 8.293a1 1 0 00-1.414 0l-2 2a1 1 0 101.414 1.414L8 10.414l1.293 1.293a1 1 0 001.414 0l4-4z"
+                clip-rule="evenodd"
+              />
+            </svg>
+            数据分析
+          </a>
+
+          <div class="mt-8">
+            <div
+              class="text-xs uppercase text-gray-500 font-semibold px-4 mb-2"
+            >
+              工具
+            </div>
+            <a
+              href="#"
+              class="nav-item flex items-center px-4 py-3 rounded-lg transition-colors mb-1"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-5 w-5 mr-3"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z"
+                  clip-rule="evenodd"
+                />
+              </svg>
+              系统设置
+            </a>
+          </div>
+        </nav>
+
+        <div class="p-4 border-t border-gray-200 dark:border-gray-700">
+          <div class="flex items-center">
+            <div
+              class="w-8 h-8 rounded-full bg-primary-light flex items-center justify-center"
+            >
+              <span class="text-primary font-bold">U</span>
+            </div>
+            <div class="ml-3 flex-1">
+              <p class="text-sm font-medium">管理员</p>
+              <p class="text-xs text-gray-500">admin@example.com</p>
+            </div>
+            <button class="text-gray-500 hover:text-primary">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-5 w-5"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
+                  clip-rule="evenodd"
+                />
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 主内容区域 -->
+      <div class="flex-1 flex flex-col overflow-hidden">
+        <!-- 顶部导航栏 -->
+        <header
+          class="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700"
+        >
+          <div class="flex items-center justify-between p-4">
+            <div class="flex items-center">
+              <button
+                id="mobile-menu-button"
+                class="md:hidden mr-2 text-gray-600 dark:text-gray-300"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="h-6 w-6"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M4 6h16M4 12h16M4 18h16"
+                  />
+                </svg>
+              </button>
+              <h1 class="text-xl font-bold">控制面板</h1>
+            </div>
+
+            <div class="flex items-center space-x-4">
+              <div class="relative">
+                <input
+                  type="text"
+                  placeholder="搜索..."
+                  class="pl-10 pr-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-primary-light"
+                />
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="h-5 w-5 text-gray-500 absolute left-3 top-2.5"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+              </div>
+
+              <button class="relative p-1 text-gray-600 dark:text-gray-300">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="h-6 w-6"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"
+                  />
+                </svg>
+                <span
+                  class="absolute top-0 right-0 w-2 h-2 bg-red-500 rounded-full"
+                ></span>
+              </button>
+
+              <div class="flex items-center">
+                <button
+                  id="theme-toggle"
+                  class="p-2 rounded-full bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 mr-2"
+                >
+                  <svg
+                    id="light-icon"
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-5 w-5"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"
+                      clip-rule="evenodd"
+                    />
+                  </svg>
+                  <svg
+                    id="dark-icon"
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-5 w-5 hidden"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                  >
+                    <path
+                      d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"
+                    />
+                  </svg>
+                </button>
+
+                <div
+                  class="w-8 h-8 rounded-full bg-primary-light flex items-center justify-center cursor-pointer"
+                >
+                  <span class="text-primary font-bold">U</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </header>
+
+        <!-- 主要内容 -->
+        <main
+          class="flex-1 overflow-y-auto p-4 md:p-6 bg-gray-50 dark:bg-gray-900"
+        >
+          <!-- 欢迎横幅 -->
+          <div
+            class="bg-gradient-to-r from-purple-500 to-indigo-600 rounded-xl p-6 text-white mb-6"
+          >
+            <div
+              class="flex flex-col md:flex-row justify-between items-start md:items-center"
+            >
+              <div>
+                <h2 class="text-2xl font-bold">欢迎回来，管理员！</h2>
+                <p class="mt-2 opacity-90">
+                  今天有5个新项目等待处理，3个客户需要跟进
+                </p>
+              </div>
+              <button
+                class="mt-4 md:mt-0 px-5 py-2.5 bg-white text-primary rounded-lg font-medium hover:bg-opacity-90 transition-all transform hover:-translate-y-0.5"
+              >
+                查看详情
+              </button>
+            </div>
+          </div>
+
+          <!-- 统计卡片 -->
+          <div
+            class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6"
+          >
+            <div class="card rounded-xl shadow-sm p-6">
+              <div class="flex justify-between items-start">
+                <div>
+                  <p class="text-gray-500 dark:text-gray-400">总收入</p>
+                  <h3 class="text-2xl font-bold mt-1">¥128,420</h3>
+                  <p class="text-sm mt-2 flex items-center text-green-500">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="h-4 w-4 mr-1"
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M5.293 9.707a1 1 0 010-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 01-1.414 1.414L11 7.414V15a1 1 0 11-2 0V7.414L6.707 9.707a1 1 0 01-1.414 0z"
+                        clip-rule="evenodd"
+                      />
+                    </svg>
+                    +12.5%
+                  </p>
+                </div>
+                <div class="p-3 rounded-lg bg-purple-100 text-primary">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-6 w-6"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                    />
+                  </svg>
+                </div>
+              </div>
+            </div>
+
+            <div class="card rounded-xl shadow-sm p-6">
+              <div class="flex justify-between items-start">
+                <div>
+                  <p class="text-gray-500 dark:text-gray-400">新增用户</p>
+                  <h3 class="text-2xl font-bold mt-1">3,287</h3>
+                  <p class="text-sm mt-2 flex items-center text-green-500">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="h-4 w-4 mr-1"
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M5.293 9.707a1 1 0 010-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 01-1.414 1.414L11 7.414V15a1 1 0 11-2 0V7.414L6.707 9.707a1 1 0 01-1.414 0z"
+                        clip-rule="evenodd"
+                      />
+                    </svg>
+                    +8.2%
+                  </p>
+                </div>
+                <div class="p-3 rounded-lg bg-pink-100 text-pink-500">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-6 w-6"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
+                    />
+                  </svg>
+                </div>
+              </div>
+            </div>
+
+            <div class="card rounded-xl shadow-sm p-6">
+              <div class="flex justify-between items-start">
+                <div>
+                  <p class="text-gray-500 dark:text-gray-400">订单数量</p>
+                  <h3 class="text-2xl font-bold mt-1">1,234</h3>
+                  <p class="text-sm mt-2 flex items-center text-green-500">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="h-4 w-4 mr-1"
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M5.293 9.707a1 1 0 010-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 01-1.414 1.414L11 7.414V15a1 1 0 11-2 0V7.414L6.707 9.707a1 1 0 01-1.414 0z"
+                        clip-rule="evenodd"
+                      />
+                    </svg>
+                    +4.3%
+                  </p>
+                </div>
+                <div class="p-3 rounded-lg bg-blue-100 text-blue-500">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-6 w-6"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"
+                    />
+                  </svg>
+                </div>
+              </div>
+            </div>
+
+            <div class="card rounded-xl shadow-sm p-6">
+              <div class="flex justify-between items-start">
+                <div>
+                  <p class="text-gray-500 dark:text-gray-400">待处理任务</p>
+                  <h3 class="text-2xl font-bold mt-1">18</h3>
+                  <p class="text-sm mt-2 flex items-center text-red-500">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="h-4 w-4 mr-1"
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M14.707 10.293a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 111.414-1.414L9 12.586V5a1 1 0 012 0v7.586l2.293-2.293a1 1 0 011.414 0z"
+                        clip-rule="evenodd"
+                      />
+                    </svg>
+                    -2.1%
+                  </p>
+                </div>
+                <div class="p-3 rounded-lg bg-yellow-100 text-yellow-500">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-6 w-6"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"
+                    />
+                  </svg>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 图表区域 -->
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+            <div class="card rounded-xl shadow-sm p-6">
+              <div class="flex justify-between items-center mb-4">
+                <h3 class="font-bold text-lg">收入趋势</h3>
+                <div class="flex">
+                  <button
+                    class="px-3 py-1 text-sm rounded-lg bg-purple-50 text-primary mr-2"
+                  >
+                    月
+                  </button>
+                  <button
+                    class="px-3 py-1 text-sm rounded-lg bg-gray-100 text-gray-600"
+                  >
+                    周
+                  </button>
+                </div>
+              </div>
+              <div class="chart-container">
+                <canvas id="revenueChart"></canvas>
+              </div>
+            </div>
+
+            <div class="card rounded-xl shadow-sm p-6">
+              <div class="flex justify-between items-center mb-4">
+                <h3 class="font-bold text-lg">用户分布</h3>
+                <button class="text-gray-500 hover:text-primary">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-5 w-5"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                  >
+                    <path
+                      d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z"
+                    />
+                  </svg>
+                </button>
+              </div>
+              <div class="chart-container">
+                <canvas id="userDistributionChart"></canvas>
+              </div>
+            </div>
+          </div>
+
+          <!-- 最近活动 -->
+          <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <div class="card rounded-xl shadow-sm p-6 lg:col-span-2">
+              <div class="flex justify-between items-center mb-4">
+                <h3 class="font-bold text-lg">最近活动</h3>
+                <button class="text-gray-500 hover:text-primary">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-5 w-5"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                  >
+                    <path
+                      d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z"
+                    />
+                  </svg>
+                </button>
+              </div>
+
+              <div class="space-y-4">
+                <div class="flex items-start">
+                  <div class="p-2 bg-purple-100 rounded-lg text-primary mr-3">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="h-5 w-5"
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
+                        clip-rule="evenodd"
+                      />
+                    </svg>
+                  </div>
+                  <div class="flex-1">
+                    <p class="font-medium">新用户注册</p>
+                    <p class="text-sm text-gray-500">张三 加入了系统</p>
+                    <p class="text-xs text-gray-400 mt-1">5分钟前</p>
+                  </div>
+                  <button class="text-gray-400 hover:text-gray-600">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="h-5 w-5"
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z"
+                        clip-rule="evenodd"
+                      />
+                    </svg>
+                  </button>
+                </div>
+
+                <div class="flex items-start">
+                  <div class="p-2 bg-green-100 rounded-lg text-green-500 mr-3">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="h-5 w-5"
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M4 4a2 2 0 00-2 2v4a2 2 0 002 2V6h10a2 2 0 00-2-2H4zm2 6a2 2 0 012-2h8a2 2 0 012 2v4a2 2 0 01-2 2H8a2 2 0 01-2-2v-4zm6 4a2 2 0 100-4 2 2 0 000 4z"
+                        clip-rule="evenodd"
+                      />
+                    </svg>
+                  </div>
+                  <div class="flex-1">
+                    <p class="font-medium">新订单创建</p>
+                    <p class="text-sm text-gray-500">订单 #OR-1234 已创建</p>
+                    <p class="text-xs text-gray-400 mt-1">1小时前</p>
+                  </div>
+                  <button class="text-gray-400 hover:text-gray-600">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="h-5 w-5"
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z"
+                        clip-rule="evenodd"
+                      />
+                    </svg>
+                  </button>
+                </div>
+
+                <div class="flex items-start">
+                  <div
+                    class="p-2 bg-yellow-100 rounded-lg text-yellow-500 mr-3"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="h-5 w-5"
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M18 13V5a2 2 0 00-2-2H4a2 2 0 00-2 2v8a2 2 0 002 2h3l3 3 3-3h3a2 2 0 002-2zM5 7a1 1 0 011-1h8a1 1 0 110 2H6a1 1 0 01-1-1zm1 3a1 1 0 100 2h3a1 1 0 100-2H6z"
+                        clip-rule="evenodd"
+                      />
+                    </svg>
+                  </div>
+                  <div class="flex-1">
+                    <p class="font-medium">新评论</p>
+                    <p class="text-sm text-gray-500">李四 在项目A发表了评论</p>
+                    <p class="text-xs text-gray-400 mt-1">2小时前</p>
+                  </div>
+                  <button class="text-gray-400 hover:text-gray-600">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="h-5 w-5"
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z"
+                        clip-rule="evenodd"
+                      />
+                    </svg>
+                  </button>
+                </div>
+
+                <div class="flex items-start">
+                  <div class="p-2 bg-blue-100 rounded-lg text-blue-500 mr-3">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="h-5 w-5"
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                        clip-rule="evenodd"
+                      />
+                    </svg>
+                  </div>
+                  <div class="flex-1">
+                    <p class="font-medium">任务完成</p>
+                    <p class="text-sm text-gray-500">"UI设计更新" 已完成</p>
+                    <p class="text-xs text-gray-400 mt-1">昨天</p>
+                  </div>
+                  <button class="text-gray-400 hover:text-gray-600">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="h-5 w-5"
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z"
+                        clip-rule="evenodd"
+                      />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- 项目进度 -->
+            <div class="card rounded-xl shadow-sm p-6">
+              <div class="flex justify-between items-center mb-4">
+                <h3 class="font-bold text-lg">项目进度</h3>
+                <button class="text-primary flex items-center text-sm">
+                  查看全部
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-4 w-4 ml-1"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                      clip-rule="evenodd"
+                    />
+                  </svg>
+                </button>
+              </div>
+
+              <div class="space-y-5">
+                <div>
+                  <div class="flex justify-between text-sm mb-2">
+                    <span>网站改版</span>
+                    <span>75%</span>
+                  </div>
+                  <div class="w-full bg-gray-200 rounded-full h-2">
+                    <div
+                      class="bg-purple-600 h-2 rounded-full"
+                      style="width: 75%"
+                    ></div>
+                  </div>
+                  <div class="flex justify-between text-xs text-gray-500 mt-1">
+                    <span>负责人: 张三</span>
+                    <span>截止: 2025-08-15</span>
+                  </div>
+                </div>
+
+                <div>
+                  <div class="flex justify-between text-sm mb-2">
+                    <span>移动端优化</span>
+                    <span>45%</span>
+                  </div>
+                  <div class="w-full bg-gray-200 rounded-full h-2">
+                    <div
+                      class="bg-blue-500 h-2 rounded-full"
+                      style="width: 45%"
+                    ></div>
+                  </div>
+                  <div class="flex justify-between text-xs text-gray-500 mt-1">
+                    <span>负责人: 李四</span>
+                    <span>截止: 2025-09-01</span>
+                  </div>
+                </div>
+
+                <div>
+                  <div class="flex justify-between text-sm mb-2">
+                    <span>支付系统升级</span>
+                    <span>90%</span>
+                  </div>
+                  <div class="w-full bg-gray-200 rounded-full h-2">
+                    <div
+                      class="bg-green-500 h-2 rounded-full"
+                      style="width: 90%"
+                    ></div>
+                  </div>
+                  <div class="flex justify-between text-xs text-gray-500 mt-1">
+                    <span>负责人: 王五</span>
+                    <span>截止: 2025-07-30</span>
+                  </div>
+                </div>
+
+                <div>
+                  <div class="flex justify-between text-sm mb-2">
+                    <span>数据分析模块</span>
+                    <span>30%</span>
+                  </div>
+                  <div class="w-full bg-gray-200 rounded-full h-2">
+                    <div
+                      class="bg-yellow-500 h-2 rounded-full"
+                      style="width: 30%"
+                    ></div>
+                  </div>
+                  <div class="flex justify-between text-xs text-gray-500 mt-1">
+                    <span>负责人: 赵六</span>
+                    <span>截止: 2025-08-25</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+
+    <script>
+      $(document).ready(function () {
+        // 主题切换功能
+        $("#theme-toggle").click(function () {
+          $("body").toggleClass("dark-theme");
+          $("#light-icon").toggleClass("hidden");
+          $("#dark-icon").toggleClass("hidden");
+
+          // 保存用户偏好
+          const isDarkMode = $("body").hasClass("dark-theme");
+          localStorage.setItem("darkMode", isDarkMode);
+        });
+
+        // 移动端菜单切换
+        $("#mobile-menu-button").click(function () {
+          $(".sidebar").toggleClass("hidden");
+        });
+
+        // 初始化主题
+        if (localStorage.getItem("darkMode") === "true") {
+          $("body").addClass("dark-theme");
+          $("#light-icon").addClass("hidden");
+          $("#dark-icon").removeClass("hidden");
+        } else {
+          $("#dark-icon").addClass("hidden");
+        }
+
+        // 导航项点击效果
+        $(".nav-item").click(function (e) {
+          e.preventDefault();
+          $(".nav-item").removeClass("active");
+          $(this).addClass("active");
+        });
+
+        // 初始化图表
+        const revenueCtx = document
+          .getElementById("revenueChart")
+          .getContext("2d");
+        const revenueChart = new Chart(revenueCtx, {
+          type: "line",
+          data: {
+            labels: ["1月", "2月", "3月", "4月", "5月", "6月", "7月"],
+            datasets: [
+              {
+                label: "收入 (万元)",
+                data: [65, 78, 66, 79, 95, 87, 120],
+                borderColor: "#8B5CF6",
+                backgroundColor: "rgba(139, 92, 246, 0.1)",
+                tension: 0.3,
+                fill: true,
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: {
+                display: false,
+              },
+            },
+            scales: {
+              y: {
+                beginAtZero: true,
+                grid: {
+                  color: "rgba(0, 0, 0, 0.05)",
+                },
+              },
+              x: {
+                grid: {
+                  display: false,
+                },
+              },
+            },
+          },
+        });
+
+        const userCtx = document
+          .getElementById("userDistributionChart")
+          .getContext("2d");
+        const userChart = new Chart(userCtx, {
+          type: "doughnut",
+          data: {
+            labels: ["新用户", "活跃用户", "沉默用户", "流失用户"],
+            datasets: [
+              {
+                data: [35, 25, 20, 20],
+                backgroundColor: ["#8B5CF6", "#C4B5FD", "#FBCFE8", "#DDD6FE"],
+                borderWidth: 0,
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: {
+                position: "right",
+              },
+            },
+            cutout: "70%",
+          },
+        });
+
+        // 窗口调整大小时重新绘制图表
+        $(window).resize(function () {
+          revenueChart.resize();
+          userChart.resize();
+        });
+      });
+    </script>
+  </body>
+</html>
