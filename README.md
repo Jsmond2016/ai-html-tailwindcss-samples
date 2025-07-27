@@ -15,6 +15,9 @@
 | sample-03 | portfolio优化版本   | 链接          | [链接](https://chat.deepseek.com/) |
 | sample-04 | portfolio优化+1版本 | 链接          | [链接](https://chat.deepseek.com/) |
 | sample-05 | portfolio优化+2版本 | 链接          | [链接](https://chat.deepseek.com/) |
+| sample-06 | portfolio优化+3版本 | 链接          | [链接](https://chat.deepseek.com/) |
+| sample-07 | portfolio优化+4版本 | 链接          | [链接](https://chat.deepseek.com/) |
+| sample-08 | admin 后台系统首页  | 链接          | [链接](https://chat.deepseek.com/) |
 
  
 
