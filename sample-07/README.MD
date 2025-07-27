@@ -1,32 +1,16 @@
 # 项目名称
 
-- 本地预览：http://127.0.0.1:5500/sample-07/index.html
-- github-pages 预览地址：
-- 预览效果：
 
 ![](./imgs/image.png)
-- 生成 AI 工具：
+
+- github-pages 预览地址：https://jsmond2016.github.io/ai-html-tailwindcss-samples/sample-07/
+- 本地预览：http://127.0.0.1:5500/sample-07/index.html
+
+- 生成 AI 工具： [deepseek](https://chat.deepseek.com/) / gpt4-o1
 - AI 提示词
 
 ```text
-        | [链接](https://chat.deepseek.com/) |
-| sample-04 | portfolio优化+1版本 | 链接          | [链接](https://chat.deepseek.com/) |
-| sample-05 | portfolio优化+2版本 | 链接          | [链接](https://chat.deepseek.com/) |
-
-
-
-
-
-
-
-
-
-
-本项目基于 [deepseek](https://chat.deepseek.com/) / gpt4-o1 创建；
-
-提示词：
-
-```
+     
 提示词：
 
 以下是对您前几次提出的问题和要求的总结提示词，经过润色整理，便于后续使用：

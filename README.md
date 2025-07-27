@@ -8,16 +8,16 @@
 
 表格
 
-| 项目      | 项目说明            | AI 提示词链接 | 链接                               |
-| --------- | ------------------- | ------------- | ---------------------------------- |
-| sample-01 | portfolio简单版本   | 链接          | [链接](https://chat.deepseek.com/) |
-| sample-02 | portfolio进阶版本   | 链接          | [链接](https://chat.deepseek.com/) |
-| sample-03 | portfolio优化版本   | 链接          | [链接](https://chat.deepseek.com/) |
-| sample-04 | portfolio优化+1版本 | 链接          | [链接](https://chat.deepseek.com/) |
-| sample-05 | portfolio优化+2版本 | 链接          | [链接](https://chat.deepseek.com/) |
-| sample-06 | portfolio优化+3版本 | 链接          | [链接](https://chat.deepseek.com/) |
-| sample-07 | portfolio优化+4版本 | 链接          | [链接](https://chat.deepseek.com/) |
-| sample-08 | admin 后台系统首页  | 链接          | [链接](https://chat.deepseek.com/) |
+| 项目      | 项目说明            | AI 提示词链接                                                                                   | 链接                                                                        |
+| --------- | ------------------- | ----------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------- |
+| sample-01 | portfolio简单版本   | [链接](https://github.com/Jsmond2016/ai-html-tailwindcss-samples/blob/main/sample-01/README.MD) | [链接](https://jsmond2016.github.io/ai-html-tailwindcss-samples/sample-01/) |
+| sample-02 | portfolio进阶版本   | [链接](https://github.com/Jsmond2016/ai-html-tailwindcss-samples/blob/main/sample-02/README.MD) | [链接](https://jsmond2016.github.io/ai-html-tailwindcss-samples/sample-02/) |
+| sample-03 | portfolio优化版本   | [链接](https://github.com/Jsmond2016/ai-html-tailwindcss-samples/blob/main/sample-03/README.MD) | [链接](https://jsmond2016.github.io/ai-html-tailwindcss-samples/sample-03/) |
+| sample-04 | portfolio优化+1版本 | [链接](https://github.com/Jsmond2016/ai-html-tailwindcss-samples/blob/main/sample-04/README.MD) | [链接](https://jsmond2016.github.io/ai-html-tailwindcss-samples/sample-04/) |
+| sample-05 | portfolio优化+2版本 | [链接](https://github.com/Jsmond2016/ai-html-tailwindcss-samples/blob/main/sample-05/README.MD) | [链接](https://jsmond2016.github.io/ai-html-tailwindcss-samples/sample-05/) |
+| sample-06 | portfolio优化+3版本 | [链接](https://github.com/Jsmond2016/ai-html-tailwindcss-samples/blob/main/sample-06/README.MD) | [链接](https://jsmond2016.github.io/ai-html-tailwindcss-samples/sample-06/) |
+| sample-07 | portfolio优化+4版本 | [链接](https://github.com/Jsmond2016/ai-html-tailwindcss-samples/blob/main/sample-07/README.MD) | [链接](https://jsmond2016.github.io/ai-html-tailwindcss-samples/sample-07/) |
+| sample-08 | admin 后台系统首页  | [链接](https://github.com/Jsmond2016/ai-html-tailwindcss-samples/blob/main/sample-08/README.MD) | [链接](https://jsmond2016.github.io/ai-html-tailwindcss-samples/sample-08/) |
 
  
 

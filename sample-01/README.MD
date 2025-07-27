@@ -1,20 +1,16 @@
 # 项目名称
 
-- 本地预览：http://127.0.0.1:5500/sample-01/index.html
-- github-pages 预览地址：
-- 预览效果：
-
 ![](./imgs/image.png)
+
+- github-pages 预览地址：https://jsmond2016.github.io/ai-html-tailwindcss-samples/sample-01/
+- 本地预览：http://127.0.0.1:5500/sample-01/index.html
+
 
 - 生成 AI 工具：[deepseek](https://chat.deepseek.com/) / gpt4-o1
 - AI 提示词
 
 ```text
  
-
-提示词：
-
-```
 提示词：
 
 以下是对您前几次提出的问题和要求的总结提示词，经过润色整理，便于后续使用：
