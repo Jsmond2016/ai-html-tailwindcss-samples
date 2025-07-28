@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>趣味奖状生成器</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'golden': '#daa520',
+                        'vintage-red': '#B71C1C',
+                        'vintage-green': '#1B5E20',
+                        'vintage-yellow': '#F9A825',
+                        'parchment': '#F5F0E1'
+                    },
+                    fontFamily: {
+                        'cursive': '"楷体", "STKaiti", "华文楷体", cursive',
+                        'header': '"隶书", "STLiti", "华文隶书", serif'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .vintage-border {
+            position: relative;
+            border: 20px solid transparent;
+            border-image: url("data:image/svg+xml,%3Csvg width='200' height='200' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M10,10 L190,10 L190,190 L10,190 Z' fill='none' stroke='%231B5E20' stroke-width='10' stroke-dasharray='20,10' stroke-linejoin='round'/%3E%3C/svg%3E") 30 round;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+        }
+
+        .curtain-top {
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            height: 70px;
+            background-color: #B71C1C;
+            border-radius: 50% 50% 0 0;
+            z-index: 10;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        }
+
+        .star {
+            position: absolute;
+            top: -5px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #FFD700;
+            font-size: 36px;
+            text-shadow: 0 0 8px rgba(255,215,0,0.7);
+            z-index: 20;
+        }
+
+        .flower-bottom {
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 48px;
+            color: #E91E63;
+            z-index: 10;
+            text-shadow: 0 0 8px rgba(233,30,99,0.5);
+        }
+
+        .leaf {
+            position: absolute;
+            bottom: 15px;
+            font-size: 28px;
+            color: #4CAF50;
+        }
+
+        .leaf-left { left: 30%; }
+        .leaf-right { right: 30%; }
+
+        /* 动画效果 */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate-certificate {
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        /* 奖状内文字 */
+        .certificate-content {
+            position: relative;
+            z-index: 5;
+            text-align: center;
+        }
+
+        textarea.custom-content {
+            height: 120px;
+            resize: none;
+        }
+
+        .color-preview {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
+            margin-left: 8px;
+            vertical-align: middle;
+            box-shadow: 0 0 3px rgba(0,0,0,0.3);
+        }
+
+        .pin-icon {
+            cursor: pointer;
+            margin-left: 8px;
+            transition: all 0.3s;
+        }
+
+        .pin-icon.active {
+            color: #FF5722;
+            transform: rotate(15deg);
+        }
+
+        .organization-container {
+            margin-bottom: 4px;
+        }
+
+        .settings-btn {
+            position: fixed;
+            right: 30px;
+            bottom: 30px;
+            z-index: 100;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #B71C1C, #1B5E20);
+            color: white;
+            font-size: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            transition: all 0.3s;
+        }
+
+        .settings-btn:hover {
+            transform: scale(1.1) rotate(20deg);
+        }
+
+        .settings-drawer {
+            position: fixed;
+            top: 0;
+            right: -400px;
+            width: 400px;
+            height: 100%;
+            background: white;
+            z-index: 200;
+            box-shadow: -5px 0 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease-out;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .drawer-open {
+            transform: translateX(-400px);
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 150;
+            display: none;
+        }
+
+        .overlay-visible {
+            display: block;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <!-- 页头 -->
+    <header class="bg-gradient-to-r from-vintage-green to-vintage-red py-4 shadow-lg">
+        <div class="container mx-auto px-4">
+            <h1 class="text-3xl text-white font-bold text-center">趣味奖状生成器</h1>
+            <p class="text-center text-yellow-100 mt-1">自定义专属搞笑奖状，表彰优秀表现</p>
+        </div>
+    </header>
+
+    <div class="container mx-auto p-4">
+        <div class="flex flex-col items-center">
+            <!-- 预览区 -->
+            <div class="w-full max-w-4xl">
+                <div class="bg-white rounded-lg shadow-xl overflow-hidden p-6 w-full">
+                    <h2 class="text-xl font-semibold text-center mb-4">奖状预览</h2>
+                    <div id="certificate-preview" class="vintage-border bg-parchment relative p-8 animate-certificate" style="min-height: 650px;">
+                        <div class="curtain-top"></div>
+                        <div class="star">★</div>
+
+                        <div class="certificate-content">
+                            <h2 id="preview-title" class="text-5xl font-header mb-8 mt-6" style="color: #B71C1C;">奖状</h2>
+
+                            <p class="text-xl mt-10 mb-3">授予：<span id="preview-name" class="font-bold underline">小美同学</span></p>
+                            <div id="preview-content" class="text-lg my-8 font-cursive leading-relaxed">
+                                为了表彰你嘴巴说个不停，特此表彰你为"最佳话唠精"，以资鼓励，再接再厉！
+                            </div>
+
+                            <div class="flex justify-between mt-20 flex-col items-end">
+                                <div class="organization-container">
+                                    <p id="preview-organization" class="text-lg font-cursive">搞笑幼儿园</p>
+                                </div>
+                                <div>
+                                    <p id="preview-date" class="text-lg font-cursive">2025年7月28日</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="flower-bottom">❀</div>
+                        <div class="leaf leaf-left">🍃</div>
+                        <div class="leaf leaf-right">🍃</div>
+                    </div>
+
+                    <div class="mt-6 text-center">
+                        <button id="download-btn" class="bg-vintage-green hover:bg-green-800 text-white py-2 px-6 rounded-full transition transform hover:scale-105">
+                            下载奖状
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 右下角设置按钮 -->
+    <div class="settings-btn" id="open-settings">
+        ⚙️
+    </div>
+
+    <!-- 设置抽屉面板 -->
+    <div class="settings-drawer" id="settings-drawer">
+        <h2 class="text-xl font-semibold text-center mb-4">奖状设置</h2>
+
+        <div id="certificate-form" class="space-y-5">
+            <div>
+                <label class="block text-gray-700 mb-2">标题内容</label>
+                <input type="text" id="title" value="奖状" class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-vintage-red">
+            </div>
+
+            <div>
+                <label class="block text-gray-700 mb-2">获奖人姓名
+                    <span id="pin-name" class="pin-icon active">📌</span>
+                </label>
+                <input type="text" id="name" value="小美同学" placeholder="输入获奖人姓名" class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-vintage-red">
+            </div>
+
+            <div>
+                <label class="block text-gray-700 mb-2">奖状内容</label>
+                <textarea id="content" class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-vintage-red custom-content">为了表彰你嘴巴说个不停，特此表彰你为"最佳话唠精"，以资鼓励，再接再厉！</textarea>
+                <p class="text-sm text-gray-500 mt-1">可自定义文本内容</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-gray-700 mb-2">颁发单位</label>
+                    <input type="text" id="organization" value="搞笑幼儿园" placeholder="输入颁发单位" class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-vintage-red">
+                </div>
+                <div>
+                    <label class="block text-gray-700 mb-2">日期</label>
+                    <input type="text" id="date" value="2025年7月28日" placeholder="例如：2025年7月28日" class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-vintage-red">
+                </div>
+            </div>
+
+            <hr class="my-4">
+
+            <h3 class="text-lg font-medium text-gray-800">自定义样式</h3>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-gray-700 mb-2">背景颜色</label>
+                    <div class="flex items-center">
+                        <input type="color" id="bg-color" value="#F5F0E1" class="w-10 h-10 border-0 rounded cursor-pointer">
+                        <span class="ml-2 text-gray-600 font-medium">米黄</span>
+                        <span class="color-preview ml-1" style="background-color: #F5F0E1;"></span>
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-gray-700 mb-2">标题颜色</label>
+                    <div class="flex items-center">
+                        <input type="color" id="title-color" value="#B71C1C" class="w-10 h-10 border-0 rounded cursor-pointer">
+                        <span class="ml-2 text-gray-600 font-medium">红色</span>
+                        <span class="color-preview ml-1" style="background-color: #B71C1C;"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pt-6 flex flex-col gap-3">
+                <button type="button" id="random-content" class="bg-yellow-500 hover:bg-yellow-600 text-white py-2 px-4 rounded transition w-full">
+                    随机内容
+                </button>
+
+                <div class="grid grid-cols-2 gap-3">
+                    <button type="button" id="cancel-btn" class="bg-gray-300 hover:bg-gray-400 text-gray-800 py-2 px-4 rounded transition w-full">
+                        取消
+                    </button>
+                    <button type="button" id="confirm-btn" class="bg-vintage-green hover:bg-green-800 text-white py-2 px-4 rounded transition w-full">
+                        确认
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 遮罩层 -->
+    <div class="overlay" id="overlay"></div>
+
+    <footer class="mt-12 py-6 bg-gray-100 text-center text-gray-600">
+        <p>趣味奖状生成器 &copy; 2025 - 搞怪专属定制</p>
+    </footer>
+
+    <script>
+        // 修复后的搞笑奖励数据 - 保持一致的对应关系
+        const funnyAwards = [
+            {
+                performance: "嘴巴说个不停",
+                title: "最佳话唠精",
+                organization: "搞笑幼儿园"
+            },
+            {
+                performance: "睡觉呼噜震天响",
+                title: "呼噜大王",
+                organization: "午睡小能手协会"
+            },
+            {
+                performance: "饭量赛过小恐龙",
+                title: "干饭小勇士",
+                organization: "美食加油站"
+            },
+            {
+                performance: "每天都笑容满面",
+                title: "开心果小天使",
+                organization: "阳光幼儿园"
+            },
+            {
+                performance: "玩具收纳大师",
+                title: "整洁小标兵",
+                organization: "玩具总动员委员会"
+            },
+            {
+                performance: "涂鸦艺术天分",
+                title: "创意小画家",
+                organization: "艺术创作营"
+            }
+        ];
+
+        // 可爱的小名
+        const cuteNames = ["小美", "壮壮", "花花", "豆豆", "球球", "乐宝", "萌萌"];
+        const cuteSuffix = ["同学", "宝贝", "宝宝", "小可爱"];
+
+        $(document).ready(function() {
+            // 名字固定状态（默认固定）
+            let isNamePinned = true;
+
+            // 打开设置面板
+            $("#open-settings").click(function() {
+                $("#settings-drawer").addClass("drawer-open");
+                $("#overlay").addClass("overlay-visible");
+            });
+
+            // 关闭设置面板
+            $("#cancel-btn, #overlay").click(function() {
+                $("#settings-drawer").removeClass("drawer-open");
+                $("#overlay").removeClass("overlay-visible");
+            });
+
+            // 确认设置
+            $("#confirm-btn").click(function() {
+                updatePreview();
+                $("#settings-drawer").removeClass("drawer-open");
+                $("#overlay").removeClass("overlay-visible");
+            });
+
+            // 固定图标点击事件
+            $("#pin-name").click(function() {
+                isNamePinned = !isNamePinned;
+                $(this).toggleClass("active", isNamePinned);
+                $(this).text(isNamePinned ? "📌" : "📍");
+            });
+
+            // 设置面板中名字输入事件
+            $("#name").on('input', function() {
+                // 名字输入后自动激活固定状态
+                if ($(this).val().trim() !== '') {
+                    isNamePinned = true;
+                    $("#pin-name").addClass("active").text("📌");
+                } else {
+                    isNamePinned = false;
+                    $("#pin-name").removeClass("active").text("📍");
+                }
+            });
+
+            // 实时更新预览
+            $("#certificate-form input, #certificate-form textarea").on('input', function() {
+                updatePreview();
+            });
+
+            // 颜色选择器事件监听
+            $("#bg-color, #title-color").on('input', function() {
+                updateColors();
+            });
+
+            // 随机内容生成函数
+            $("#random-content").click(function() {
+                // 随机选择一个完整奖励集
+                const randomAward = funnyAwards[Math.floor(Math.random() * funnyAwards.length)];
+
+                // 未固定名字则生成随机名字
+                if (!isNamePinned) {
+                    const randomName = cuteNames[Math.floor(Math.random() * cuteNames.length)] +
+                                     cuteSuffix[Math.floor(Math.random() * cuteSuffix.length)];
+                    $("#name").val(randomName);
+
+                    // 输入名字后自动固定
+                    isNamePinned = true;
+                    $("#pin-name").addClass("active").text("📌");
+                }
+
+                // 生成内容文本
+                $("#content").val(`为了表彰你${randomAward.performance}，特此表彰你为"${randomAward.title}"，以资鼓励，再接再厉！`);
+
+                // 设置机构
+                $("#organization").val(randomAward.organization);
+
+                // 设置当前日期
+                const now = new Date();
+                const formattedDate = `${now.getFullYear()}年${now.getMonth() + 1}月${now.getDate()}日`;
+                $("#date").val(formattedDate);
+
+                // 立即更新预览
+                updatePreview();
+            });
+
+            // 下载按钮功能
+            $("#download-btn").click(function() {
+                alert("功能说明：在实际应用中，此处将实现奖状的图片下载功能。\n\n推荐实现方案：\n1. 引入html2canvas.min.js库\n2. 使用html2canvas()将预览区转换为图片\n3. 提供下载链接给用户");
+            });
+        });
+
+        // 更新预览函数
+        function updatePreview() {
+            $("#preview-title").text($("#title").val());
+            $("#preview-name").text($("#name").val() || "小美同学");
+            $("#preview-content").html($("#content").val().replace(/\n/g, "<br>"));
+            $("#preview-organization").text($("#organization").val() || "搞笑幼儿园");
+            $("#preview-date").text($("#date").val() || "2025年7月28日");
+        }
+
+        // 更新颜色函数
+        function updateColors() {
+            $("#certificate-preview").css("background-color", $("#bg-color").val());
+            $("#preview-title").css("color", $("#title-color").val());
+        }
+
+        // 初始化更新
+        updatePreview();
+    </script>
+</body>
+</html>
