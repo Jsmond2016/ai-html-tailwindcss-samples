@@ -18,8 +18,9 @@
 | sample-06 | portfolio优化+3版本 | [链接](https://github.com/Jsmond2016/ai-html-tailwindcss-samples/blob/main/sample-06/README.MD) | [链接](https://jsmond2016.github.io/ai-html-tailwindcss-samples/sample-06/) |
 | sample-07 | portfolio优化+4版本 | [链接](https://github.com/Jsmond2016/ai-html-tailwindcss-samples/blob/main/sample-07/README.MD) | [链接](https://jsmond2016.github.io/ai-html-tailwindcss-samples/sample-07/) |
 | sample-08 | admin 后台系统首页  | [链接](https://github.com/Jsmond2016/ai-html-tailwindcss-samples/blob/main/sample-08/README.MD) | [链接](https://jsmond2016.github.io/ai-html-tailwindcss-samples/sample-08/) |
-| sample-09 | 随机文案生成器      | [链接](https://github.com/Jsmond2016/ai-html-tailwindcss-samples/blob/main/sample-09/README.MD) | [链接](https://jsmond2016.github.io/ai-html-tailwindcss-samples/sample-09/) |
- 
+| sample-09 | AI趣味奖状生成器      | [链接](https://github.com/Jsmond2016/ai-html-tailwindcss-samples/blob/main/sample-09/README.MD) | [链接](https://jsmond2016.github.io/ai-html-tailwindcss-samples/sample-09/) |
+| sample-10 | AI大学录取通知书生成器      | [链接](https://github.com/Jsmond2016/ai-html-tailwindcss-samples/blob/main/sample-10/README.MD) | [链接](https://jsmond2016.github.io/ai-html-tailwindcss-samples/sample-10/) | 
+| sample-11 | 在线番茄时钟      | [链接](https://github.com/Jsmond2016/ai-html-tailwindcss-samples/blob/main/sample-11/README.MD) | [链接](https://jsmond2016.github.io/ai-html-tailwindcss-samples/sample-11/) | 
 
 ## 预览方式
 

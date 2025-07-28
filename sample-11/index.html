@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>番茄工作法时钟</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap');
+        
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4edf5 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        .tomato-container {
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            border-radius: 24px;
+            overflow: hidden;
+        }
+        
+        .timer-display {
+            transition: all 0.3s ease;
+        }
+        
+        .timer-progress {
+            transition: width 1s linear;
+        }
+        
+        .preset-btn {
+            transition: all 0.2s ease;
+        }
+        
+        .preset-btn:hover {
+            transform: translateY(-3px);
+        }
+        
+        .preset-btn.active {
+            transform: scale(1.05);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .custom-input:focus {
+            box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.2);
+        }
+        
+        .animate-pulse-slow {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.8; }
+            100% { opacity: 1; }
+        }
+        
+        .time-end {
+            animation: timeEnd 1s infinite alternate;
+        }
+        
+        @keyframes timeEnd {
+            from { background-color: #fee2e2; }
+            to { background-color: #fecaca; }
+        }
+    </style>
+</head>
+<body class="flex flex-col items-center justify-center min-h-screen p-4">
+    <div class="w-full max-w-md mx-auto">
+        <h1 class="text-3xl md:text-4xl font-bold text-center text-gray-800 mb-2">番茄工作法时钟</h1>
+        <p class="text-gray-600 text-center mb-8">提升专注力，高效完成任务</p>
+        
+        <div class="tomato-container bg-white">
+            <!-- 计时器显示区域 -->
+            <div class="timer-display bg-gradient-to-r from-red-50 to-orange-50 py-10 px-6 text-center">
+                <div class="text-7xl font-bold text-red-500 mb-4" id="timer">25:00</div>
+                <div class="text-xl font-medium text-gray-700 mb-2" id="status">准备开始</div>
+                <div class="h-2 bg-gray-200 rounded-full overflow-hidden mx-auto max-w-xs">
+                    <div class="timer-progress h-full bg-red-500" style="width: 0%"></div>
+                </div>
+            </div>
+            
+            <!-- 控制面板 -->
+            <div class="p-6">
+                <div class="flex justify-center space-x-4 mb-8">
+                    <button id="startBtn" class="bg-red-500 hover:bg-red-600 text-white py-3 px-8 rounded-full font-semibold shadow-lg transition duration-300 transform hover:scale-105">
+                        <i class="fas fa-play mr-2"></i>开始
+                    </button>
+                    <button id="pauseBtn" class="bg-gray-500 hover:bg-gray-600 text-white py-3 px-8 rounded-full font-semibold shadow-lg transition duration-300 transform hover:scale-105">
+                        <i class="fas fa-pause mr-2"></i>暂停
+                    </button>
+                    <button id="resetBtn" class="bg-gray-200 hover:bg-gray-300 text-gray-700 py-3 px-8 rounded-full font-semibold shadow-lg transition duration-300 transform hover:scale-105">
+                        <i class="fas fa-redo mr-2"></i>重置
+                    </button>
+                </div>
+                
+                <!-- 预设时间选择 -->
+                <div class="mb-8">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-4">选择专注时长</h3>
+                    <div class="grid grid-cols-3 gap-3">
+                        <button data-time="25" class="preset-btn bg-white border-2 border-red-200 text-red-500 py-3 rounded-lg font-medium hover:bg-red-50 active">25分钟</button>
+                        <button data-time="30" class="preset-btn bg-white border-2 border-red-200 text-red-500 py-3 rounded-lg font-medium hover:bg-red-50">30分钟</button>
+                        <button data-time="45" class="preset-btn bg-white border-2 border-red-200 text-red-500 py-3 rounded-lg font-medium hover:bg-red-50">45分钟</button>
+                    </div>
+                </div>
+                
+                <!-- 自定义时间设置 -->
+                <div class="mb-6">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-4">自定义时间</h3>
+                    <div class="flex">
+                        <input type="number" id="customTime" min="1" max="120" placeholder="输入分钟 (1-120)" class="custom-input flex-grow border-2 border-red-200 rounded-l-lg py-3 px-4 focus:outline-none focus:border-red-400">
+                        <button id="setCustomBtn" class="bg-red-500 hover:bg-red-600 text-white py-3 px-6 rounded-r-lg font-semibold transition">设置</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 番茄工作法说明 -->
+        <div class="mt-8 bg-white p-6 rounded-2xl shadow-md">
+            <h3 class="text-xl font-bold text-gray-800 mb-4">番茄工作法</h3>
+            <p class="text-gray-600 mb-3">
+                <i class="fas fa-check-circle text-red-500 mr-2"></i>选择一个任务，将番茄时间设为25分钟
+            </p>
+            <p class="text-gray-600 mb-3">
+                <i class="fas fa-check-circle text-red-500 mr-2"></i>专注工作直到番茄时钟响起
+            </p>
+            <p class="text-gray-600 mb-3">
+                <i class="fas fa-check-circle text-red-500 mr-2"></i>短暂休息5分钟，然后开始下一个番茄钟
+            </p>
+            <p class="text-gray-600">
+                <i class="fas fa-check-circle text-red-500 mr-2"></i>每完成4个番茄钟，休息15-30分钟
+            </p>
+        </div>
+    </div>
+
+    <!-- 音频提示 -->
+    <audio id="endSound" src="https://assets.mixkit.co/sfx/preview/mixkit-alarm-digital-clock-beep-989.mp3"></audio>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // DOM元素
+            const timerDisplay = document.getElementById('timer');
+            const statusDisplay = document.getElementById('status');
+            const progressBar = document.querySelector('.timer-progress');
+            const startBtn = document.getElementById('startBtn');
+            const pauseBtn = document.getElementById('pauseBtn');
+            const resetBtn = document.getElementById('resetBtn');
+            const presetBtns = document.querySelectorAll('.preset-btn');
+            const customTimeInput = document.getElementById('customTime');
+            const setCustomBtn = document.getElementById('setCustomBtn');
+            const endSound = document.getElementById('endSound');
+            
+            // 计时器变量
+            let timer;
+            let isRunning = false;
+            let isPaused = false;
+            let totalSeconds = 25 * 60; // 默认25分钟
+            let remainingSeconds = totalSeconds;
+            let progressPercent = 0;
+            
+            // 更新计时器显示
+            function updateDisplay() {
+                const minutes = Math.floor(remainingSeconds / 60);
+                const seconds = remainingSeconds % 60;
+                timerDisplay.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                
+                // 更新进度条
+                progressPercent = ((totalSeconds - remainingSeconds) / totalSeconds) * 100;
+                progressBar.style.width = `${progressPercent}%`;
+            }
+            
+            // 开始计时器
+            function startTimer() {
+                if (isRunning && !isPaused) return;
+                
+                if (isPaused) {
+                    isPaused = false;
+                } else {
+                    remainingSeconds = totalSeconds;
+                }
+                
+                isRunning = true;
+                startBtn.textContent = '继续';
+                startBtn.innerHTML = '<i class="fas fa-play mr-2"></i>继续';
+                statusDisplay.textContent = '专注中...';
+                document.querySelector('.timer-display').classList.remove('time-end');
+                
+                timer = setInterval(() => {
+                    remainingSeconds--;
+                    
+                    if (remainingSeconds <= 0) {
+                        clearInterval(timer);
+                        isRunning = false;
+                        timerDisplay.textContent = "00:00";
+                        statusDisplay.textContent = "时间到！休息一下吧";
+                        progressBar.style.width = '100%';
+                        document.querySelector('.timer-display').classList.add('time-end');
+                        
+                        // 播放提示音
+                        endSound.play();
+                        
+                        // 闪烁效果
+                        timerDisplay.classList.add('animate-pulse-slow');
+                        return;
+                    }
+                    
+                    updateDisplay();
+                }, 1000);
+            }
+            
+            // 暂停计时器
+            function pauseTimer() {
+                if (!isRunning) return;
+                
+                clearInterval(timer);
+                isRunning = false;
+                isPaused = true;
+                statusDisplay.textContent = "已暂停";
+            }
+            
+            // 重置计时器
+            function resetTimer() {
+                clearInterval(timer);
+                isRunning = false;
+                isPaused = false;
+                remainingSeconds = totalSeconds;
+                progressBar.style.width = '0%';
+                statusDisplay.textContent = "准备开始";
+                startBtn.textContent = '开始';
+                startBtn.innerHTML = '<i class="fas fa-play mr-2"></i>开始';
+                document.querySelector('.timer-display').classList.remove('time-end');
+                timerDisplay.classList.remove('animate-pulse-slow');
+                updateDisplay();
+            }
+            
+            // 设置时间
+            function setTime(minutes) {
+                totalSeconds = minutes * 60;
+                resetTimer();
+                
+                // 更新预设按钮状态
+                presetBtns.forEach(btn => {
+                    if (parseInt(btn.dataset.time) === minutes) {
+                        btn.classList.add('active', 'bg-red-100');
+                    } else {
+                        btn.classList.remove('active', 'bg-red-100');
+                    }
+                });
+            }
+            
+            // 事件监听器
+            startBtn.addEventListener('click', startTimer);
+            pauseBtn.addEventListener('click', pauseTimer);
+            resetBtn.addEventListener('click', resetTimer);
+            
+            presetBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const minutes = parseInt(btn.dataset.time);
+                    setTime(minutes);
+                });
+            });
+            
+            setCustomBtn.addEventListener('click', () => {
+                const customMinutes = parseInt(customTimeInput.value);
+                
+                if (customMinutes && customMinutes >= 1 && customMinutes <= 120) {
+                    setTime(customMinutes);
+                    customTimeInput.value = '';
+                } else {
+                    alert('请输入1-120之间的有效分钟数');
+                }
+            });
+            
+            customTimeInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    setCustomBtn.click();
+                }
+            });
+            
+            // 初始化
+            updateDisplay();
+        });
+    </script>
+</body>
+</html>
